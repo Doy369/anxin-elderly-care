@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安心养老 · 前端页面预览</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+body {
+  background:#EFF3F1;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  color:#14261F;
+  padding:24px 16px 60px;
+}
+.page-head { max-width:1240px; margin:0 auto 22px; }
+.page-head h1 { font-size:20px; font-weight:600; margin-bottom:6px; }
+.page-head p { font-size:13px; color:#6B7C74; line-height:1.6; }
+.hint {
+  max-width:1240px; margin:0 auto 20px; background:#fff; border:1px solid #E6EFE9;
+  border-radius:10px; padding:12px 16px; font-size:12.5px; color:#55665E; line-height:1.7;
+}
+.hint b { color:#15803D; }
+
+.grid {
+  max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:26px;
+}
+.item { }
+.item-label {
+  font-size:12.5px; color:#55665E; margin-bottom:8px; display:flex; align-items:center; gap:7px;
+}
+.item-label b { color:#14261F; font-weight:600; }
+.badge {
+  background:#E9F6EE; color:#0B5F2C; font-size:10.5px; padding:2px 8px; border-radius:99px; font-weight:500;
+}
+
+/* 手机壳 */
+.phone {
+  width:300px; background:#fff; border:1px solid #DCE8E0; border-radius:26px;
+  overflow:hidden; box-shadow:0 4px 16px rgba(20,60,40,.07);
+}
+.nav {
+  background:#15803D; color:#fff; padding:11px 14px; text-align:center;
+  font-size:14px; font-weight:600; position:relative;
+}
+.nav .back { position:absolute; left:13px; font-size:17px; font-weight:400; }
+.tabbar {
+  display:flex; background:#fff; border-top:1px solid #EEF4F0;
+}
+.tabbar div {
+  flex:1; text-align:center; padding:8px 0 9px; font-size:10px; color:#7A8B85;
+}
+.tabbar div.on { color:#15803D; font-weight:600; }
+.tabbar .ico { font-size:15px; display:block; margin-bottom:2px; }
+.body {
+  height:520px; overflow-y:auto; background:#fff; padding-bottom:14px;
+  scrollbar-width:thin;
+}
+.body::-webkit-scrollbar { width:3px; }
+.body::-webkit-scrollbar-thumb { background:#DCE8E0; border-radius:3px; }
+
+/* ===== 通用组件（rpx*0.5 换算：1rpx ≈ 0.4px @300宽） ===== */
+.pad { padding:0 14px; }
+.card {
+  background:#fff; border:1px solid #E6EFE9; border-radius:11px;
+  padding:14px; margin-top:11px;
+}
+.ct { font-size:15px; font-weight:700; color:#14261F; margin-bottom:10px; }
+.tag {
+  display:inline-block; background:#E9F6EE; color:#0B5F2C;
+  font-size:10px; padding:2px 7px; border-radius:99px; margin-right:5px;
+}
+.tag2 { background:#D9F1E2; }
+.price { color:#0F7A38; font-weight:700; display:flex; align-items:baseline; }
+.price s { font-size:11px; }
+.price b { font-size:19px; }
+.price em { font-size:10px; font-weight:400; color:#7A8B85; font-style:normal; }
+.sec-t { font-size:16px; font-weight:700; margin-bottom:2px; }
+.sec-s { font-size:11.5px; color:#7A8B85; margin-bottom:11px; }
+.btn {
+  height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:700; border:none; width:100%;
+}
+.btn-p { background:#15803D; color:#fff; }
+.btn-a { background:linear-gradient(135deg,#22A855 0%,#15803D 100%); color:#fff; }
+.btn-g { background:#fff; color:#15803D; border:1.5px solid #15803D; }
+.btn-s { height:33px; font-size:12.5px; border-radius:8px; padding:0 12px; width:auto; }
+.inp {
+  height:44px; background:#F4F8F5; border-radius:8px; padding:0 13px;
+  font-size:14px; color:#14261F; display:flex; align-items:center;
+}
+.inp.ph { color:#9AA8A2; }
+.lbl { font-size:13.5px; font-weight:600; margin-bottom:7px; display:block; }
+.lbl i { color:#D64545; font-style:normal; margin-left:3px; }
+textarea.inp { height:auto; min-height:70px; padding:11px 13px; line-height:1.6; align-items:flex-start; }
+.row { display:flex; align-items:center; }
+.chip {
+  height:33px; padding:0 13px; border-radius:99px; background:#F4F8F5; border:1px solid transparent;
+  display:flex; align-items:center; font-size:12.5px; color:#3D4F49; margin-right:7px; margin-bottom:7px;
+}
+.chip.on { background:#E9F6EE; border-color:#15803D; color:#15803D; font-weight:600; }
+.empty { padding:60px 20px; text-align:center; }
+.empty .e-i { font-size:40px; }
+.empty .e-t { display:block; font-size:13px; color:#7A8B85; margin-top:12px; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>安心养老 · 前端页面预览</h1>
+  <p>按小程序实际样式 1:1 还原，尺寸比例与真机一致（300px 宽 ≈ 375px 逻辑宽度等比）</p>
+</div>
+
+<div class="hint">
+  <b>7 个页面</b> · 全部白底绿系（主绿 #15803D）· 正文 ≥30rpx 适老化字号 · 可左右滚动查看。
+  超大字体开关在「我的」页，开启后字号会整体放大约 24%。
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const $ = (h) => h;
+
+function phone(label, badge, nav, body, tab) {
+  return `<div class="item">
+    <div class="item-label"><b>${label}</b><span class="badge">${badge}</span></div>
+    <div class="phone">
+      <div class="nav">${nav}</div>
+      <div class="body">${body}</div>
+      ${tab ? `<div class="tabbar">${tab}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+const TAB = (active) => {
+  const t = [['首页','🏠'],['找服务','🔧'],['我的订单','📋'],['我的','👤']];
+  return t.map(([n,i]) => `<div class="${n===active?'on':''}"><span class="ico">${i}</span>${n}</div>`).join('');
+};
+
+/* ========== 1. 首页 ========== */
+const svcCard = (icon,name,rating,dur,price,unit,desc,tags) => `
+<div class="card">
+  <div class="row" style="align-items:flex-start">
+    <div style="font-size:21px;margin-right:10px">${icon}</div>
+    <div style="flex:1">
+      <div style="font-size:15px;font-weight:700">${name}</div>
+      <div class="row" style="margin-top:5px;font-size:11px;color:#7A8B85;gap:10px">
+        <span>⭐ ${rating}</span><span>${dur}</span>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div class="price"><s>¥</s><b>${price}</b></div>
+      <em style="font-size:10px;color:#7A8B85">${unit}</em>
+    </div>
+  </div>
+  <div style="font-size:12.5px;color:#55665E;line-height:1.65;margin-top:9px">${desc}</div>
+  <div style="margin-top:8px">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+</div>`;
+
+const indexPage = phone('首页','index.wxml','安心养老',`
+<div style="background:linear-gradient(160deg,#15803D 0%,#22A855 100%);padding:16px 14px 34px;border-radius:0 0 24px 24px;position:relative">
+  <div class="row" style="align-items:flex-start">
+    <div style="flex:1">
+      <div style="color:#fff;font-size:19px;font-weight:700">下午好，王阿姨</div>
+      <div style="color:rgba(255,255,255,.82);font-size:11.5px;margin-top:5px">为您自己的健康和生活安排服务</div>
+    </div>
+    <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.5);color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center">王</div>
+  </div>
+  <div style="background:#fff;border-radius:11px;padding:13px 15px;display:flex;align-items:center;margin-top:16px;box-shadow:0 3px 12px rgba(21,128,61,.14)">
+    <div style="font-size:23px;margin-right:11px">📞</div>
+    <div style="flex:1">
+      <div style="font-size:11.5px;color:#7A8B85">需要帮助？打电话</div>
+      <div style="font-size:17px;font-weight:700;margin-top:2px">400-800-1234</div>
+    </div>
+    <div style="font-size:20px;color:#9AA8A2">›</div>
+  </div>
+</div>
+
+<div class="pad">
+  <div style="background:#fff;border:1px solid #E6EFE9;border-radius:11px;padding:5px;display:flex;margin-top:14px">
+    <div style="flex:1;height:44px;background:#15803D;border-radius:9px;display:flex;align-items:center;justify-content:center">
+      <span style="font-size:14px;margin-right:6px">👴</span><span style="font-size:13.5px;color:#fff;font-weight:600">我自己用</span>
+    </div>
+    <div style="flex:1;height:44px;display:flex;align-items:center;justify-content:center">
+      <span style="font-size:14px;margin-right:6px">👨‍👩‍👧</span><span style="font-size:13.5px;color:#55665E;font-weight:600">帮家人下单</span>
+    </div>
+  </div>
+
+  <div class="sec-t" style="margin-top:20px">常用服务</div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;margin-top:11px">
+    ${[['🔧','家居改造','防滑扶手'],['🩺','上门护理','持证护理员'],['🚿','助浴洗澡','安全洗浴'],['🍲','助餐送餐','少油少盐']].map(([i,n,d])=>`
+    <div style="width:48.5%;background:#fff;border:1px solid #E6EFE9;border-radius:11px;padding:13px;margin-bottom:9px">
+      <div style="font-size:25px">${i}</div>
+      <div style="font-size:14.5px;font-weight:700;margin-top:8px">${n}</div>
+      <div style="font-size:11.5px;color:#7A8B85;margin-top:4px">${d}</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="sec-t" style="margin-top:14px">适老化家居安装</div>
+  <div class="sec-s">政府补贴可申请 · 上门测量 · 师傅安装</div>
+  ${svcCard('🚿','卫生间无障碍改造','4.9','约 2 天','2800','起 / 整套','淋浴区防滑处理、扶手安装、坐便器安全改造，一站式解决老人洗澡安全问题。',['政府补贴可申请','含上门测量','90天质保'])}
+  <div class="btn btn-g btn-s" style="width:100%;margin-top:2px">查看全部改造项目</div>
+
+  <div class="sec-t" style="margin-top:20px">居家养老服务</div>
+  <div class="sec-s">持证上门 · 服务留痕 · 子女可查</div>
+  ${svcCard('🩺','居家护理照料','4.8','按小时','68','起 / 小时','持证护理员上门，提供生活照料、协助进食、翻身拍背等基础护理服务。',['持证护理员','可开发票','不满意免单'])}
+  ${svcCard('💪','康复训练与理疗','4.7','60分钟','120','起 / 次','康复治疗师上门做中风后遗症、骨关节术后、跌倒后康复训练。',['康复师持证','居家训练计划'])}
+  <div class="btn btn-g btn-s" style="width:100%;margin-top:2px">查看全部养老服务</div>
+
+  <div style="background:#fff;border:1px solid #E6EFE9;border-radius:11px;padding:14px;display:flex;justify-content:space-between;margin-top:20px">
+    ${[['✅','服务人员实名认证'],['🔒','过程全程留痕'],['↩️','不满意24h可退']].map(([i,t])=>`
+    <div style="width:30%;text-align:center">
+      <div style="font-size:18px">${i}</div>
+      <div style="font-size:10.5px;color:#55665E;margin-top:6px;line-height:1.4">${t}</div>
+    </div>`).join('')}
+  </div>
+</div>`, TAB('首页'));
+
+/* ========== 2. 找服务 ========== */
+const allServices = [
+  ['🚿','卫生间无障碍改造','4.9','约 2 天','2800','起 / 整套','淋浴区防滑处理、扶手安装、坐便器安全改造','4.9k',['政府补贴可申请','含上门测量','90天质保']],
+  ['🛏️','床边扶手与起身助力','4.8','当天','480','起 / 套','免打孔落地扶手，稳固不晃，有效预防跌倒','5.1k',['免打孔','承重300斤','当天安装']],
+  ['🧱','全屋防滑改造','4.7','约 3 天','1200','起 / 100㎡','厨房、阳台、卫生间整体处理，防滑等级达 R11','1.9k',['免费上门评估','防滑R11','质保2年']],
+  ['🆘','紧急呼叫与安全监测','4.9','当天','890','套','一键呼叫 + 毫米波跌倒监测，异常自动通知子女','2.7k',['跌倒自动报警','子女手机接收']],
+  ['🩺','居家护理照料','4.8','按小时','68','起 / 小时','生活照料、协助进食、翻身拍背等基础护理','8.6k',['持证护理员','可开发票']],
+  ['💪','康复训练与理疗','4.7','60分钟','120','起 / 次','中风后遗症、术后、跌倒后康复训练','4.2k',['康复师持证','疗程可套餐']],
+  ['🚗','陪诊陪跑代办','4.6','4小时','150','起 / 半天','陪同就医、取药、缴费，帮记医嘱','3.0k',['全程陪同','行程同步家人']],
+  ['🧼','上门助洁助浴','4.7','按小时','45','起 / 小时','擦洗地面、油烟机，协助洗澡擦身','5.4k',['自带工具','返工免费']],
+  ['🍲','老年助餐与送餐','4.6','每日三餐','18','起 / 餐','少油少盐、软烂易嚼，每日定时送餐到家','7.4k',['少油少盐','软烂易嚼']],
+  ['🚿','助浴上门洗浴','4.8','90分钟','98','起 / 次','专业助浴师带移动洗澡椅上门全程陪同','3.0k',['专业助浴师','女性优先']],
+  ['💬','陪聊与精神慰藉','4.9','按小时','60','起 / 小时','持证心理咨询师上门陪伴，缓解孤独情绪','1.9k',['持证咨询师','独居老人优先']],
+  ['📱','适老手机使用教学','4.8','60分钟','0','公益','手把手教视频通话、挂号、扫码、防诈骗','4.4k',['免费公益','防诈骗讲解']]
+];
+
+const svcRow = (s) => `
+<div class="card">
+  <div class="row" style="align-items:flex-start">
+    <div style="font-size:21px;margin-right:10px">${s[0]}</div>
+    <div style="flex:1">
+      <div style="font-size:15px;font-weight:700">${s[1]}</div>
+      <div class="row" style="margin-top:5px;font-size:10.5px;color:#7A8B85;gap:9px">
+        <span>⭐ ${s[2]}</span><span>${s[3]}</span><span>${s[7]}</span>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div class="price"><s>¥</s><b>${s[4]}</b></div>
+      <em style="font-size:10px;color:#7A8B85">${s[5]}</em>
+    </div>
+  </div>
+  <div style="font-size:11px;color:#15803D;margin-top:7px">🏷 ${['安心适老改造中心','安心护理站','安心家政'][s[4].length%3]}</div>
+  <div style="font-size:12.5px;color:#55665E;line-height:1.65;margin-top:5px">${s[6]}</div>
+  <div style="margin-top:8px">${s[8].map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+  <div class="row" style="justify-content:space-between;margin-top:11px;padding-top:10px;border-top:1px solid #EEF4F0">
+    <span style="font-size:12.5px;color:#7A8B85">看服务详情 ›</span>
+    <span class="btn btn-p btn-s">立即预约</span>
+  </div>
+</div>`;
+
+const servicesPage = phone('找服务','services.wxml','找服务',`
+<div style="background:#fff;border-bottom:1px solid #EEF4F0;padding:11px 14px;position:sticky;top:0;z-index:5">
+  <div style="height:40px;background:#F3F6F5;border-radius:99px;display:flex;align-items:center;padding:0 13px">
+    <span style="font-size:13px;margin-right:7px">🔍</span>
+    <span style="font-size:13px;color:#9AA8A2">搜索服务，如：扶手、防滑、护理</span>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:10px;overflow:hidden">
+    <div style="height:34px;padding:0 14px;border-radius:99px;background:#15803D;display:flex;align-items:center">
+      <span style="font-size:11px;margin-right:4px">🏠</span><span style="font-size:12.5px;color:#fff;font-weight:600">全部</span></div>
+    <div style="height:34px;padding:0 14px;border-radius:99px;background:#F3F6F5;display:flex;align-items:center">
+      <span style="font-size:11px;margin-right:4px">🔧</span><span style="font-size:12.5px;color:#55665E;font-weight:600">家居安装</span></div>
+    <div style="height:34px;padding:0 14px;border-radius:99px;background:#F3F6F5;display:flex;align-items:center">
+      <span style="font-size:11px;margin-right:4px">🩺</span><span style="font-size:12.5px;color:#55665E;font-weight:600">上门照护</span></div>
+    <div style="height:34px;padding:0 14px;border-radius:99px;background:#F3F6F5;display:flex;align-items:center">
+      <span style="font-size:11px;margin-right:4px">🧺</span><span style="font-size:12.5px;color:#55665E;font-weight:600">生活助养</span></div>
+  </div>
+</div>
+<div class="pad">
+  <div style="font-size:11.5px;color:#7A8B85;margin:13px 0 10px">共 12 项服务</div>
+  ${allServices.slice(0,5).map(svcRow).join('')}
+</div>`, TAB('找服务'));
+
+/* ========== 3. 服务预约 ========== */
+const bookingPage = phone('服务预约','booking.wxml',`
+  <div class="back">‹</div>服务预约`,`
+<div style="background:#fff;border-bottom:1px solid #EEF2F1;padding:14px;display:flex;align-items:flex-start">
+  <div style="font-size:25px;margin-right:11px">🩺</div>
+  <div style="flex:1">
+    <div style="font-size:16.5px;font-weight:700">居家护理照料</div>
+    <div style="font-size:11px;color:#15803D;margin-top:4px">安心护理站</div>
+    <div class="row" style="margin-top:5px;font-size:10.5px;color:#7A8B85;gap:9px">
+      <span>⭐ 4.8</span><span>按小时</span><span>8.6k 单</span>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <div class="price"><s>¥</s><b>68</b></div>
+    <em style="font-size:10px;color:#7A8B85">起/小时</em>
+  </div>
+</div>
+
+<div class="pad">
+  <div class="card">
+    <div class="ct">服务包含</div>
+    ${['生活照料','进食协助','翻身拍背','护理记录回传'].map(t=>`
+    <div class="row" style="align-items:flex-start;margin-bottom:7px">
+      <span style="color:#15803D;font-weight:700;font-size:13px;margin-right:8px">✓</span>
+      <span style="font-size:13px;color:#3D4F49;line-height:1.6">${t}</span>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="ct">服务流程</div>
+    ${['选择服务时长','选择上门时间','匹配护理员','服务后评价'].map((t,i)=>`
+    <div class="row" style="margin-bottom:8px">
+      <div style="width:20px;height:20px;border-radius:50%;background:#E9F6EE;color:#15803D;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0">${i+1}</div>
+      <span style="font-size:13px;color:#3D4F49">${t}</span>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="ct">填写预约信息</div>
+    <label class="lbl">服务对象<i>*</i></label>
+    <div style="background:#F0F7F2;border-radius:7px;padding:8px 10px;margin-bottom:8px">
+      <span style="font-size:11px;color:#0B5F2C">当前为「帮家人下单」模式，服务记录会同步给家人</span>
+    </div>
+    <div style="margin-bottom:20px">
+      <span class="chip on">我本人</span><span class="chip">父亲·王大爷</span><span class="chip">母亲·李阿姨</span>
+      <span class="chip" style="background:transparent;border:1px dashed #9AA8A2;color:#7A8B85">+ 添加家人</span>
+    </div>
+
+    <label class="lbl">联系人姓名<i>*</i></label>
+    <div class="inp" style="margin-bottom:18px">王强</div>
+
+    <label class="lbl">联系电话<i>*</i></label>
+    <div class="inp" style="margin-bottom:18px">138 0013 8000</div>
+
+    <label class="lbl">上门地址<i>*</i></label>
+    <div style="display:flex;margin-bottom:4px">
+      <div class="inp" style="flex:1;margin-right:7px;font-size:12px">阳光小区 3 栋 201</div>
+      <div class="btn btn-g btn-s" style="height:44px;padding:0 11px;font-size:11px">📍 定位</div>
+    </div>
+
+    <label class="lbl" style="margin-top:16px">上门日期<i>*</i></label>
+    <div class="inp" style="justify-content:space-between;margin-bottom:18px">
+      <span>2026-10-11</span><span style="color:#9AA8A2">›</span>
+    </div>
+
+    <label class="lbl">上门时段<i>*</i></label>
+    <div style="margin-bottom:18px">
+      <span class="chip on">09:00-11:00</span><span class="chip">11:00-13:00</span>
+      <span class="chip">13:00-15:00</span><span class="chip">15:00-17:00</span>
+    </div>
+
+    <label class="lbl">服务数量</label>
+    <div class="row" style="margin-bottom:18px">
+      <div style="width:38px;height:38px;border-radius:8px;background:#F3F6F5;color:#15803D;font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center">−</div>
+      <div style="width:54px;text-align:center;font-size:19px;font-weight:700">2</div>
+      <div style="width:38px;height:38px;border-radius:8px;background:#F3F6F5;color:#15803D;font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center">+</div>
+      <span style="font-size:11px;color:#7A8B85;margin-left:8px">小时 × ¥68 起</span>
+    </div>
+
+    <label class="lbl">补充说明</label>
+    <textarea class="inp" style="margin-bottom:18px">父亲有高血压，上午状态较好</textarea>
+
+    <label class="lbl">服务情况通知给</label>
+    <div style="background:#F7FAF9;border-radius:7px;padding:9px 11px;margin-bottom:8px">
+      <span style="font-size:11px;color:#7A8B85;line-height:1.6">服务人员的联系电话与服务记录会通过这里预留的号码发送</span>
+    </div>
+    <div class="inp" style="font-size:12px">139 0021 9000</div>
+  </div>
+
+  <div class="card">
+    <div class="ct">费用预估</div>
+    <div class="row" style="justify-content:space-between">
+      <span style="font-size:13px;color:#3D4F49">居家护理照料 × 2</span>
+      <span style="font-size:16px;font-weight:700;color:#0F7A38">¥136</span>
+    </div>
+    <div style="font-size:10.5px;color:#9AA8A2;margin-top:8px;line-height:1.6">实际费用以师傅上门测量后的最终报价为准，改造类项目会提前电话确认</div>
+  </div>
+
+  <div style="text-align:center;padding:14px 0 4px">
+    <span style="font-size:11px;color:#7A8B85">🛡 平台全程保障 · 不满意 24 小时内可退</span>
+  </div>
+</div>
+<div style="position:sticky;bottom:0;background:#fff;border-top:1px solid #EEF2F1;padding:10px 14px;display:flex;align-items:center">
+  <div style="flex:1">
+    <span style="font-size:11px;color:#7A8B85">预估 </span>
+    <span class="price"><s>¥</s><b style="font-size:20px">136</b></span>
+  </div>
+  <div class="btn btn-a" style="width:170px">立即预约</div>
+</div>`, null);
+
+/* ========== 4. 我的订单 ========== */
+const orderCard = (icon,name,status,cls,who,time,addr,by,amt,btn) => `
+<div class="card">
+  <div class="row" style="justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #EEF4F0;margin-bottom:10px">
+    <div class="row"><span style="font-size:18px;margin-right:8px">${icon}</span>
+      <span style="font-size:15px;font-weight:700">${name}</span></div>
+    <span style="font-size:11px;padding:3px 9px;border-radius:99px;background:${cls[0]};color:${cls[1]}">${status}</span>
+  </div>
+  ${[['服务对象',who],['上门时间',time],['上门地址',addr],['下单人',by]].map(([k,v])=>`
+  <div class="row" style="margin-bottom:5px">
+    <span style="font-size:12px;color:#9AA8A2;width:72px;flex-shrink:0">${k}</span>
+    <span style="font-size:12.5px;color:#3D4F49">${v}</span>
+  </div>`).join('')}
+  <div class="row" style="justify-content:space-between;margin-top:11px;padding-top:10px;border-top:1px solid #EEF4F0">
+    <span style="font-size:17px;font-weight:700;color:#0F7A38">${amt}</span>
+    <div class="row">
+      <span class="btn btn-g btn-s">联系师傅</span>
+      <span class="btn btn-p btn-s" style="margin-left:7px">${btn}</span>
+    </div>
+  </div>
+</div>`;
+
+const ordersPage = phone('我的订单','orders.wxml','我的订单',`
+<div style="background:#fff;display:flex;padding:8px 14px 10px;position:sticky;top:0;z-index:5">
+  <div style="height:34px;padding:0 16px;border-radius:99px;background:#15803D;display:flex;align-items:center">
+    <span style="font-size:12.5px;color:#fff;font-weight:600">全部</span></div>
+  <div style="height:34px;padding:0 16px;border-radius:99px;background:#F3F6F5;display:flex;align-items:center;margin-left:8px">
+    <span style="font-size:12.5px;color:#55665E;font-weight:600">进行中</span></div>
+  <div style="height:34px;padding:0 16px;border-radius:99px;background:#F3F6F5;display:flex;align-items:center;margin-left:8px">
+    <span style="font-size:12.5px;color:#55665E;font-weight:600">已完成</span></div>
+</div>
+<div class="pad">
+  ${orderCard('🩺','居家护理照料','服务中',['#D3EFE0','#0B5F2C'],'父亲·王大爷','2026-10-11 09:00-11:00','阳光小区 3 栋 201','子女代下单','¥136','详情')}
+  ${orderCard('🛏️','床边扶手与起身助力','待接单',['#F1F6F2','#0B5F2C'],'母亲·李阿姨','2026-10-13 15:00-17:00','阳光小区 3 栋 201','本人下单','¥480','详情')}
+  ${orderCard('🍲','老年助餐与送餐','已完成',['#E6EFE9','#6B7C74'],'我本人','2026-10-08 11:00-13:00','阳光小区 3 栋 201','本人下单','¥54','评价')}
+  ${orderCard('🚿','助浴上门洗浴','已取消',['#F4F6F4','#6B7C74'],'父亲·王大爷','2026-10-05 13:00-15:00','阳光小区 3 栋 201','子女代下单','¥98','删除')}
+</div>`, TAB('我的订单'));
+
+/* ========== 5. 订单详情 ========== */
+const detailPage = phone('订单详情','order-detail.wxml',`
+  <div class="back">‹</div>居家护理照料`,`
+<div style="background:linear-gradient(150deg,#15803D,#22A855);padding:20px 14px 22px">
+  <div style="color:#fff;font-size:20px;font-weight:700">服务中</div>
+  <div style="color:rgba(255,255,255,.88);font-size:11.5px;margin-top:6px">服务正在进行中，请保持电话畅通</div>
+</div>
+<div class="pad">
+  <div class="card">
+    <div class="ct">服务进度</div>
+    ${[['下单：2026-10-10 09:52',1],['服务人员已确认接单',1],['师傅已上门，开始服务',1],['服务完成，记录已同步给家人',0]].map(([t,state],i)=>`
+    <div class="row" style="align-items:flex-start">
+      <div style="width:26px;display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+        <div style="width:${state?'19px':'13px'};height:${state?'19px':'13px'};border-radius:50%;background:${state?'#15803D':'#DDE4E2'};${state===1?'border:3px solid #BFE6CC;':''}margin-top:${state===1?'3px':'6px'}"></div>
+        ${i<3?`<div style="flex:1;width:1.5px;background:#DDE4E2;margin:4px 0;min-height:20px"></div>`:''}
+      </div>
+      <div style="flex:1;padding-bottom:15px">
+        <div style="font-size:13.5px;color:${state?'#14261F':'#A0AEA9'};font-weight:${state===1?'700':'400'}">${['待接单','已接单','服务中','已完成'][i]}</div>
+        <div style="font-size:10.5px;color:#9AA8A2;margin-top:4px">${t}</div>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="ct">服务信息</div>
+    ${[['服务项目','🩺 居家护理照料'],['服务机构','安心护理站'],['服务对象','父亲·王大爷'],['下单人','子女代下单'],
+       ['上门时间','2026-10-11 09:00-11:00'],['联系人','王强 138 0013 8000'],['上门地址','阳光小区 3 栋 201'],
+       ['补充说明','父亲有高血压，上午状态较好'],['订单金额','¥136（2小时）'],['订单编号','AX1760000213'],['通知家属','139 0021 9000']]
+      .map(([k,v],i)=>`
+    <div class="row" style="align-items:flex-start;margin-bottom:9px">
+      <span style="font-size:12px;color:#9AA8A2;width:80px;flex-shrink:0">${k}</span>
+      <span style="font-size:12.5px;color:${i===8?'#0F7A38':'#3D4F49'};font-weight:${i===8?'700':'400'};${i>=9?'color:#9AA8A2;font-size:11.5px':''}">${v}</span>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="ct">服务记录</div>
+    ${[['2026-10-11 09:20','陈师傅','已上门为老人完成基础生活照料，进食情况良好，精神状态较上次明显好转。'],
+       ['2026-10-11 09:55','陈师傅','协助完成床铺整理与个人清洁，老人血压 138/86，在正常范围。']].map(([t,w,c])=>`
+    <div style="border-left:2px solid #15803D;padding:3px 0 3px 11px;margin-bottom:13px">
+      <div class="row" style="justify-content:space-between;margin-bottom:5px">
+        <span style="font-size:10.5px;color:#9AA8A2">${t}</span>
+        <span style="font-size:10.5px;color:#15803D;font-weight:600">${w}</span>
+      </div>
+      <div style="font-size:12.5px;color:#3D4F49;line-height:1.65">${c}</div>
+    </div>`).join('')}
+    <div class="btn btn-g btn-s" style="width:100%;height:38px;font-size:12px">添加一条服务记录（演示）</div>
+  </div>
+
+  <div class="card" style="border-color:#E4EAE6">
+    <div class="ct">需要取消？</div>
+    <div style="font-size:11px;color:#6B7C74;margin-bottom:11px;line-height:1.6">开单前均可免费取消，已接单的订单取消可能产生上门费</div>
+    <div class="btn btn-g btn-s" style="width:100%;height:38px;font-size:12.5px;color:#5F7168;border-color:#5F7168">取消订单</div>
+  </div>
+
+  <div style="margin-top:14px">
+    <div class="btn btn-g">联系服务人员</div>
+  </div>
+</div>`, null);
+
+/* ========== 6. 家人档案 ========== */
+const familyPage = phone('家人档案','family.wxml','家人档案',`
+<div style="padding:16px 14px 4px">
+  <div style="font-size:18px;font-weight:700">家人档案</div>
+  <div style="font-size:11.5px;color:#7A8B85;margin-top:6px;line-height:1.6">添加家人后，下单时可直接选择，服务记录也会同步给对方</div>
+</div>
+<div class="pad">
+  ${[['王大爷','父亲','72 岁','📞 139 0021 9000','📍 阳光小区 3 栋 201','有高血压，上午状态较好','3 单'],
+     ['李阿姨','母亲','68 岁','📞 137 8888 6666','📍 阳光小区 3 栋 201','行动不便需搀扶，听力下降需大声沟通','1 单']]
+    .map(([n,r,age,p,a,note,cnt])=>`
+  <div class="card">
+    <div class="row" style="align-items:flex-start">
+      <div style="width:42px;height:42px;border-radius:50%;background:#EAF3F0;color:#15803D;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-right:11px;flex-shrink:0">${n[0]}</div>
+      <div style="flex:1">
+        <div class="row" style="flex-wrap:wrap">
+          <span style="font-size:15px;font-weight:700;margin-right:7px">${n}</span>
+          <span style="font-size:10.5px;background:#E9F6EE;color:#15803D;padding:2px 8px;border-radius:99px;margin-right:6px">${r}</span>
+          <span style="font-size:11px;color:#7A8B85">${age}</span>
+        </div>
+        <div style="font-size:11.5px;color:#55665E;margin-top:5px">${p}</div>
+        <div style="font-size:11.5px;color:#55665E;margin-top:4px">${a}</div>
+        <div style="font-size:11.5px;color:#7A8B85;margin-top:4px;line-height:1.6">${note}</div>
+        <div style="font-size:11.5px;color:#15803D;margin-top:4px">已为 TA 下过 ${cnt}</div>
+        <div class="row" style="margin-top:10px">
+          <span style="height:29px;padding:0 12px;border-radius:99px;background:#15803D;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center">帮TA预约</span>
+          <span style="height:29px;padding:0 12px;border-radius:99px;background:#fff;border:1.5px solid #15803D;color:#15803D;font-size:11px;font-weight:600;display:flex;align-items:center;margin-left:6px">编辑</span>
+          <span style="height:29px;padding:0 12px;border-radius:99px;background:#fff;border:1.5px solid #E5C9C9;color:#C04A4A;font-size:11px;font-weight:600;display:flex;align-items:center;margin-left:6px">删除</span>
+        </div>
+      </div>
+    </div>
+  </div>`).join('')}
+  <div class="btn btn-p" style="margin-top:14px">+ 添加家人档案</div>
+</div>`, null);
+
+/* ========== 7. 我的 ========== */
+const profilePage = phone('我的','profile.wxml','我的',`
+<div style="background:linear-gradient(160deg,#15803D 0%,#22A855 100%);padding:26px 14px 32px;display:flex;flex-direction:column;align-items:center">
+  <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.55);color:#fff;font-size:27px;font-weight:700;display:flex;align-items:center;justify-content:center">王</div>
+  <div style="color:#fff;font-size:17px;font-weight:700;margin-top:11px">王秀兰</div>
+  <div style="color:rgba(255,255,255,.85);font-size:11.5px;margin-top:5px">已认证老人用户 · 子女可代下单</div>
+</div>
+<div class="pad">
+  <div style="background:#fff;border:1px solid #E6EFE9;border-radius:11px;margin-top:-16px;padding:15px 0;display:flex;box-shadow:0 2px 10px rgba(20,60,40,.07)">
+    ${[['4','累计订单'],['2','进行中'],['2','家人档案']].map(([n,l],i)=>`
+    <div style="flex:1;text-align:center;${i<2?'border-right:1px solid #F0F3F2':''}">
+      <div style="font-size:22px;font-weight:700;color:#15803D">${n}</div>
+      <div style="font-size:11px;color:#7A8B85;margin-top:4px">${l}</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <div class="ct">使用模式</div>
+    <div class="row">
+      <div style="flex:1;background:#E9F6EE;border:2px solid #15803D;border-radius:10px;padding:12px 10px;margin-right:8px;text-align:center">
+        <div style="font-size:20px">👴</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px">我自己用</div>
+        <div style="font-size:10.5px;color:#7A8B85;margin-top:4px">界面大、操作简单</div>
+      </div>
+      <div style="flex:1;background:#F4F8F5;border:2px solid #E6EFE9;border-radius:10px;padding:12px 10px;text-align:center">
+        <div style="font-size:20px">👨‍👩‍👧</div>
+        <div style="font-size:13px;font-weight:700;margin-top:6px">帮家人下单</div>
+        <div style="font-size:10.5px;color:#7A8B85;margin-top:4px">代付、查进度</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0 14px">
+    ${[['👨‍👩‍👧','家人档案','2 位'],['📋','我的订单',''],['🔧','适老化改造项目',''],['📞','客服热线','400-800-1234']].map(([i,n,x])=>`
+    <div class="row" style="height:50px;border-bottom:1px solid #F2F5F4">
+      <span style="font-size:16px;margin-right:10px">${i}</span>
+      <span style="flex:1;font-size:14px">${n}</span>
+      <span style="font-size:11.5px;color:#9AA8A2;margin-right:5px">${x}</span>
+      <span style="font-size:15px;color:#C2D0C8">›</span>
+    </div>`).join('')}
+    <div class="row" style="height:50px">
+      <span style="font-size:16px;margin-right:10px">🔠</span>
+      <span style="flex:1;font-size:14px">超大字体</span>
+      <div style="width:42px;height:25px;border-radius:99px;background:#15803D;padding:2px;display:flex;align-items:center;justify-content:flex-end">
+        <div style="width:21px;height:21px;border-radius:50%;background:#fff"></div>
+      </div>
+    </div>
+    <div class="row" style="height:50px">
+      <span style="font-size:16px;margin-right:10px">ℹ️</span>
+      <span style="flex:1;font-size:14px">关于安心养老</span>
+      <span style="font-size:15px;color:#C2D0C8">›</span>
+    </div>
+  </div>
+  <div style="text-align:center;font-size:10.5px;color:#9AA8A2;padding-top:16px">安心养老 · 版本 1.0.0</div>
+</div>`, TAB('我的'));
+
+document.getElementById('grid').innerHTML =
+  [indexPage, servicesPage, bookingPage, ordersPage, detailPage, familyPage, profilePage].join('');
+</script>
+</body>
+</html>

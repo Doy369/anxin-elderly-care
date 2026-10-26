@@ -1,0 +1,85 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="page-head">
+    <text class="ph-title">家人档案</text>
+    <text class="ph-sub">添加家人后，下单时可直接选择，服务记录也会同步给对方</text>
+  </view>
+
+  <view class="pad">
+    <view wx:if="{{list.length === 0}}" class="empty">
+      <text class="empty-icon">👨‍👩‍👧</text>
+      <text class="empty-text">还没有家人档案，添加后帮家人下单更方便</text>
+    </view>
+
+    <view class="card member-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="editMember">
+      <view class="mc-avatar">{{item.initial}}</view>
+      <view class="mc-body">
+        <view class="mc-name-row">
+          <text class="mc-name">{{item.name}}</text>
+          <text class="mc-relation">{{item.relation}}</text>
+          <text class="mc-age" wx:if="{{item.age}}">{{item.age}} 岁</text>
+        </view>
+        <text class="mc-phone" wx:if="{{item.phone}}">📞 {{item.phone}}</text>
+        <text class="mc-addr" wx:if="{{item.address}}">📍 {{item.address}}</text>
+        <text class="mc-note" wx:if="{{item.note}}">{{item.note}}</text>
+        <text class="mc-count" wx:if="{{item.orderCount > 0}}">已为 TA 下过 {{item.orderCount}} 单</text>
+        <view class="mc-actions">
+          <button class="chip-btn" catchtap="quickBook" data-id="{{item.id}}">帮TA预约</button>
+          <button class="chip-btn ghost" catchtap="editMember" data-id="{{item.id}}">编辑</button>
+          <button class="chip-btn danger" catchtap="removeMember" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+
+    <button class="btn btn-primary btn-block add-btn" bindtap="addMember">+ 添加家人档案</button>
+  </view>
+
+  <!-- 弹层表单 -->
+  <view class="mask" wx:if="{{showForm}}" bindtap="closeForm">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{editingId ? '编辑家人档案' : '添加家人档案'}}</text>
+        <text class="sheet-close" bindtap="closeForm">✕</text>
+      </view>
+
+      <scroll-view class="sheet-body" scroll-y="true">
+        <view class="form-item">
+          <text class="form-label">姓名<text class="required">*</text></text>
+          <input class="input" placeholder="如：王大爷、李阿姨" value="{{form.name}}" data-field="name" bindinput="onInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">与我的关系<text class="required">*</text></text>
+          <view class="rel-row">
+            <view class="rel-item {{form.relation === item ? 'active' : ''}}" wx:for="{{relations}}" wx:key="*this" data-r="{{item}}" bindtap="pickRelation">
+              <text class="rel-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">年龄</text>
+          <input class="input" type="number" maxlength="3" placeholder="如：72" value="{{form.age}}" data-field="age" bindinput="onInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">联系电话</text>
+          <input class="input" type="number" maxlength="11" placeholder="选填" value="{{form.phone}}" data-field="phone" bindinput="onInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">常住地址</text>
+          <input class="input" placeholder="选填，用于快速填写上门地址" value="{{form.address}}" data-field="address" bindinput="onInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">健康与照护备注</text>
+          <textarea class="textarea" placeholder="如：糖尿病需控糖、行动不便需搀扶、对海鲜过敏、听力下降需大声沟通" value="{{form.note}}" data-field="note" bindinput="onInput" />
+        </view>
+
+        <button class="btn btn-primary btn-block save-btn" bindtap="save">保存</button>
+      </scroll-view>
+    </view>
+  </view>
+
+</view>

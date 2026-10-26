@@ -1,0 +1,310 @@
+page {
+  background: #FFFFFF;}
+
+.page {
+  padding-bottom: 60rpx;}
+
+.pad {
+  padding: 0 30rpx;}
+
+.filter-bar {
+  background: #FFFFFF;
+  display: flex;
+  padding: 16rpx 30rpx 20rpx;}
+
+.filter-item {
+  height: 80rpx;
+  padding: 0 34rpx;
+  border-radius: 999rpx;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  background: #F4F8F5;}
+
+.filter-item.active {
+  background: #15803D;}
+
+.filter-item text,
+.filter-item {
+  font-size: 28rpx;
+  color: #55665E;
+  font-weight: 600;}
+
+.filter-item.active {
+  color: #FFFFFF;}
+
+.order-card {
+  border: 2rpx solid #E6EFE9;
+  padding: 30rpx;}
+
+.oc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 22rpx;
+  border-bottom: 2rpx solid #E6EFE9;
+  margin-bottom: 22rpx;}
+
+.oc-head-left {
+  display: flex;
+  align-items: center;}
+
+.oc-icon {
+  font-size: 40rpx;
+  margin-right: 16rpx;}
+
+.oc-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #14261F;}
+
+.oc-status {
+  font-size: 25rpx;
+  padding: 6rpx 20rpx;
+  border-radius: 999rpx;}
+
+.status-pending {
+  background: #F1F6F2; color: #0B5F2C;}
+
+.status-accepted {
+  background: #E9F6EE; color: #15803D;}
+
+.status-serving {
+  background: #D3EFE0; color: #0B5F2C;}
+
+.status-done {
+  background: #E6EFE9; color: #6B7C74;}
+
+.status-canceled {
+  background: #F4F6F4; color: #6B7C74;}
+
+.oc-row {
+  display: flex;
+  margin-bottom: 14rpx;}
+
+.oc-label {
+  font-size: 27rpx;
+  color: #9AA8A2;
+  width: 160rpx;
+  flex-shrink: 0;}
+
+.oc-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #3D4F49;}
+
+.oc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+  padding-top: 22rpx;
+  border-top: 2rpx solid #E6EFE9;}
+
+.oc-amount {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #0F7A38;}
+
+.oc-actions {
+  display: flex;}
+
+.btn-sm {
+  height: 76rpx;
+  font-size: 26rpx;
+  border-radius: 16rpx;
+  padding: 0 28rpx;
+  margin: 0 0 0 18rpx;
+  font-weight: 700;}
+
+.btn-ghost {
+  background: #FFFFFF;
+  color: #15803D;
+  border: 2rpx solid #15803D;}
+
+.btn-primary {
+  background: #15803D;
+  color: #FFFFFF;}
+
+.btn-sm::after {
+  border: none;}
+
+.btn-block {
+  width: 100%;}
+
+.btn {
+  display: flex; align-items: center; justify-content: center; border-radius: 20rpx;}
+
+.btn::after {
+  border: none;}
+
+.empty {
+  padding: 130rpx 40rpx; text-align: center;}
+
+.empty-icon {
+  font-size: 100rpx;}
+
+.empty-text {
+  display: block; font-size: 30rpx; color: #7A8B85; margin: 24rpx 0 40rpx;}
+
+.empty-btn {
+  width: 420rpx;
+  background: #15803D;
+  color: #FFFFFF;
+  font-size: 32rpx;
+  height: 96rpx;}
+
+
+/* ===== 超大字体（适老化）覆盖样式 ===== */
+page {
+  background: #FFFFFF;}
+
+.bigfont .page {
+  padding-bottom: 68rpx;}
+
+.bigfont .pad {
+  padding: 0 30rpx;}
+
+.bigfont .filter-bar {
+  background: #FFFFFF;
+  display: flex;
+  padding: 16rpx 30rpx 20rpx;}
+
+.bigfont .filter-item {
+  height: 91rpx;
+  padding: 0 34rpx;
+  border-radius: 999rpx;
+  margin-right: 23rpx;
+  display: flex;
+  align-items: center;
+  background: #F4F8F5;}
+
+.bigfont .filter-item.active {
+  background: #15803D;}
+
+.bigfont .filter-item text,
+.bigfont .filter-item {
+  font-size: 35rpx;
+  color: #55665E;
+  font-weight: 600;}
+
+.bigfont .filter-item.active {
+  color: #FFFFFF;}
+
+.bigfont .order-card {
+  padding: 34rpx;}
+
+.bigfont .oc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 25rpx;
+  border-bottom: 2rpx solid #E6EFE9;
+  margin-bottom: 25rpx;}
+
+.bigfont .oc-head-left {
+  display: flex;
+  align-items: center;}
+
+.bigfont .oc-icon {
+  font-size: 50rpx;
+  margin-right: 18rpx;}
+
+.bigfont .oc-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #14261F;}
+
+.bigfont .oc-status {
+  font-size: 31rpx;
+  padding: 6rpx 20rpx;
+  border-radius: 999rpx;}
+
+.bigfont .status-pending {
+  background: #F1F6F2; color: #0B5F2C;}
+
+.bigfont .status-accepted {
+  background: #E9F6EE; color: #15803D;}
+
+.bigfont .status-serving {
+  background: #D3EFE0; color: #0B5F2C;}
+
+.bigfont .status-done {
+  background: #E6EFE9; color: #6B7C74;}
+
+.bigfont .status-canceled {
+  background: #F4F6F4; color: #6B7C74;}
+
+.bigfont .oc-row {
+  display: flex;
+  margin-bottom: 16rpx;}
+
+.bigfont .oc-label {
+  font-size: 33rpx;
+  color: #9AA8A2;
+  width: 160rpx;
+  flex-shrink: 0;}
+
+.bigfont .oc-value {
+  flex: 1;
+  font-size: 35rpx;
+  color: #3D4F49;}
+
+.bigfont .oc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 27rpx;
+  padding-top: 25rpx;
+  border-top: 2rpx solid #E6EFE9;}
+
+.bigfont .oc-amount {
+  font-size: 45rpx;
+  font-weight: 700;
+  color: #0F7A38;}
+
+.bigfont .oc-actions {
+  display: flex;}
+
+.bigfont .btn-sm {
+  height: 87rpx;
+  font-size: 32rpx;
+  border-radius: 16rpx;
+  padding: 0 28rpx;
+  margin: 0 0 0 18rpx;
+  font-weight: 700;}
+
+.bigfont .btn-ghost {
+  background: #FFFFFF;
+  color: #15803D;
+  border: 2rpx solid #15803D;}
+
+.bigfont .btn-primary {
+  background: #15803D;
+  color: #FFFFFF;}
+
+.bigfont .btn-sm::after {
+  border: none;}
+
+.bigfont .btn-block {
+  width: 100%;}
+
+.bigfont .btn {
+  display: flex; align-items: center; justify-content: center; border-radius: 20rpx;}
+
+.bigfont .btn::after {
+  border: none;}
+
+.bigfont .empty {
+  padding: 130rpx 40rpx; text-align: center;}
+
+.bigfont .empty-icon {
+  font-size: 124rpx;}
+
+.bigfont .empty-text {
+  display: block; font-size: 30rpx; color: #7A8B85; margin: 24rpx 0 40rpx;}
+
+.bigfont .empty-btn {
+  width: 420rpx; background: #15803D; color: #FFFFFF; font-size: 32rpx; height: 96rpx;}
+
+

@@ -1,0 +1,89 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="profile-hero">
+    <view class="ph-avatar">{{avatarText}}</view>
+    <text class="ph-name">王秀兰</text>
+    <text class="ph-sub">已认证老人用户 · 子女可代下单</text>
+  </view>
+
+  <view class="pad">
+
+    <!-- 统计 -->
+    <view class="stat-row">
+      <view class="stat-item">
+        <text class="stat-num">{{stats.total}}</text>
+        <text class="stat-label">累计订单</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.ongoing}}</text>
+        <text class="stat-label">进行中</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.family}}</text>
+        <text class="stat-label">家人档案</text>
+      </view>
+    </view>
+
+    <!-- 使用模式 -->
+    <view class="card">
+      <view class="card-title">使用模式</view>
+      <view class="mode-row">
+        <view class="mode-item {{mode === 'elder' ? 'active' : ''}}" data-mode="elder" bindtap="switchMode">
+          <text class="mode-icon">👴</text>
+          <text class="mode-name">我自己用</text>
+          <text class="mode-desc">界面大、操作简单</text>
+        </view>
+        <view class="mode-item {{mode === 'family' ? 'active' : ''}}" data-mode="family" bindtap="switchMode">
+          <text class="mode-icon">👨‍👩‍👧</text>
+          <text class="mode-name">帮家人下单</text>
+          <text class="mode-desc">代付、查进度、看记录</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 功能入口 -->
+    <view class="card menu-card">
+      <view class="menu-row" bindtap="goFamily">
+        <text class="menu-icon">👨‍👩‍👧</text>
+        <text class="menu-name">家人档案</text>
+        <text class="menu-extra" wx:if="{{stats.family > 0}}">{{stats.family}} 位</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goOrders">
+        <text class="menu-icon">📋</text>
+        <text class="menu-name">我的订单</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goServices">
+        <text class="menu-icon">🔧</text>
+        <text class="menu-name">适老化改造项目</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="callService">
+        <text class="menu-icon">📞</text>
+        <text class="menu-name">客服热线</text>
+        <text class="menu-extra">400-800-1234</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 设置 -->
+    <view class="card menu-card">
+      <view class="menu-row" bindtap="toggleBigFont">
+        <text class="menu-icon">🔠</text>
+        <text class="menu-name">超大字体</text>
+        <view class="switch {{bigFont ? 'on' : ''}}" catchtap="toggleBigFont">
+          <view class="switch-dot"></view>
+        </view>
+      </view>
+      <view class="menu-row" bindtap="showAbout">
+        <text class="menu-icon">ℹ️</text>
+        <text class="menu-name">关于安心养老</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="version">安心养老 · 版本 1.0.0</view>
+  </view>
+
+</view>

@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/services/services",
+    "pages/booking/booking",
+    "pages/orders/orders",
+    "pages/order-detail/order-detail",
+    "pages/family/family",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#15803D",
+    "navigationBarTitleText": "安心养老",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#7A8B85",
+    "selectedColor": "#15803D",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/services/services",
+        "text": "找服务"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "text": "我的订单"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

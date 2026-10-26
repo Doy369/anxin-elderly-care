@@ -1,0 +1,114 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}" wx:if="{{order}}">
+
+  <!-- 状态条 -->
+  <view class="status-hero hero-{{order.statusKey}}">
+    <text class="sh-status">{{order.status}}</text>
+    <text class="sh-desc">{{statusDesc}}</text>
+  </view>
+
+  <view class="pad">
+
+    <!-- 进度 -->
+    <view class="card">
+      <view class="card-title">服务进度</view>
+      <view class="timeline">
+        <view class="tl-row" wx:for="{{timeline}}" wx:key="key">
+          <view class="tl-left">
+            <view class="tl-dot {{item.done ? 'done' : ''}} {{item.current ? 'current' : ''}}"></view>
+            <view class="tl-line" wx:if="{{!item.last}}"></view>
+          </view>
+          <view class="tl-body">
+            <text class="tl-title {{item.current ? 'active' : ''}}">{{item.label}}</text>
+            <text class="tl-time" wx:if="{{item.time}}">{{item.time}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 服务信息 -->
+    <view class="card">
+      <view class="card-title">服务信息</view>
+      <view class="info-row">
+        <text class="info-label">服务项目</text>
+        <text class="info-value">{{order.icon}} {{order.serviceName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">服务机构</text>
+        <text class="info-value">{{order.provider}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">服务对象</text>
+        <text class="info-value">{{order.forWhom}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">下单人</text>
+        <text class="info-value">{{order.bookedBy}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">上门时间</text>
+        <text class="info-value">{{order.date}} {{order.timeSlot}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">联系人</text>
+        <text class="info-value">{{order.contactName}} {{order.phone}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">上门地址</text>
+        <text class="info-value">{{order.address}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.remark}}">
+        <text class="info-label">补充说明</text>
+        <text class="info-value">{{order.remark}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">订单金额</text>
+        <text class="info-value amount">¥{{order.amount}}（{{order.quantity}}{{order.unit}}）</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">订单编号</text>
+        <text class="info-value muted">{{order.id}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.familyPhone}}">
+        <text class="info-label">通知家属</text>
+        <text class="info-value">{{order.familyPhone}}</text>
+      </view>
+    </view>
+
+    <!-- 服务记录 -->
+    <view class="card">
+      <view class="card-title">服务记录</view>
+      <view wx:if="{{order.records.length === 0}}" class="rec-empty">
+        <text class="rec-empty-text">服务人员上门后会在这里填写服务记录，家人可实时查看</text>
+      </view>
+      <view class="rec-item" wx:for="{{order.records}}" wx:key="id">
+        <view class="rec-head">
+          <text class="rec-time">{{item.time}}</text>
+          <text class="rec-who">{{item.worker}}</text>
+        </view>
+        <text class="rec-content">{{item.content}}</text>
+      </view>
+      <button class="btn btn-ghost btn-block rec-demo-btn" bindtap="addDemoRecord" wx:if="{{order.status !== '待接单' && order.status !== '已取消'}}">
+        添加一条服务记录（演示）
+      </button>
+    </view>
+
+    <!-- 演示：机构端上线前手动推进状态 -->
+    <view class="card demo-card" wx:if="{{canAdvance}}">
+      <view class="card-title">演示操作</view>
+      <text class="demo-tip">机构端尚未上线，这里用于手动推进订单状态，走的是同一个状态机校验。</text>
+      <button class="btn btn-primary btn-block demo-btn" bindtap="advanceStatus">模拟机构推进到下一步</button>
+    </view>
+
+    <!-- 取消 -->
+    <view class="card danger-card" wx:if="{{canCancel}}">
+      <view class="card-title">需要取消？</view>
+      <text class="danger-tip">开单前均可免费取消，已接单的订单取消可能产生上门费</text>
+      <button class="btn btn-ghost btn-block" bindtap="cancelOrder">取消订单</button>
+    </view>
+
+    <view class="foot-actions" wx:if="{{order.status !== '已取消'}}">
+      <button class="btn btn-ghost btn-block" bindtap="contactWorker">联系服务人员</button>
+    </view>
+
+  </view>
+</view>

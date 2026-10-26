@@ -1,0 +1,53 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <!-- 状态筛选 -->
+  <view class="filter-bar">
+    <view class="filter-item {{filter === 'all' ? 'active' : ''}}" data-f="all" bindtap="switchFilter">全部</view>
+    <view class="filter-item {{filter === 'ongoing' ? 'active' : ''}}" data-f="ongoing" bindtap="switchFilter">进行中</view>
+    <view class="filter-item {{filter === 'done' ? 'active' : ''}}" data-f="done" bindtap="switchFilter">已完成</view>
+  </view>
+
+  <view class="pad">
+    <view wx:if="{{list.length === 0}}" class="empty">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">{{emptyText}}</text>
+      <button class="btn btn-primary empty-btn" bindtap="goServices">去看看有什么服务</button>
+    </view>
+
+    <view class="card order-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+      <view class="oc-head">
+        <view class="oc-head-left">
+          <text class="oc-icon">{{item.icon}}</text>
+          <text class="oc-name">{{item.serviceName}}</text>
+        </view>
+        <text class="oc-status status-{{item.statusKey}}">{{item.status}}</text>
+      </view>
+
+      <view class="oc-row">
+        <text class="oc-label">服务对象</text>
+        <text class="oc-value">{{item.forWhom}}</text>
+      </view>
+      <view class="oc-row">
+        <text class="oc-label">上门时间</text>
+        <text class="oc-value">{{item.date}} {{item.timeSlot}}</text>
+      </view>
+      <view class="oc-row">
+        <text class="oc-label">上门地址</text>
+        <text class="oc-value">{{item.address}}</text>
+      </view>
+      <view class="oc-row">
+        <text class="oc-label">下单人</text>
+        <text class="oc-value">{{item.bookedBy}}</text>
+      </view>
+
+      <view class="oc-foot">
+        <text class="oc-amount">¥{{item.amount}}</text>
+        <view class="oc-actions">
+          <button class="btn btn-ghost btn-sm" catchtap="contactWorker" data-id="{{item.id}}">联系师傅</button>
+          <button class="btn btn-primary btn-sm" catchtap="goDetail" data-id="{{item.id}}">详情</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

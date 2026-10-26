@@ -1,0 +1,295 @@
+page {
+  background: #FFFFFF;}
+
+.page {
+  padding-bottom: 60rpx;}
+
+.pad {
+  padding: 0 30rpx;}
+
+.profile-hero {
+  background: linear-gradient(160deg, #15803D 0%, #22A855 100%);
+  padding: 50rpx 30rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;}
+
+.ph-avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 4rpx solid rgba(255, 255, 255, 0.55);
+  color: #FFFFFF;
+  font-size: 60rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;}
+
+.ph-name {
+  font-size: 38rpx; font-weight: 700; color: #FFFFFF; margin-top: 22rpx;}
+
+.ph-sub {
+  font-size: 26rpx; color: rgba(255, 255, 255, 0.85); margin-top: 10rpx;}
+
+.stat-row {
+  background: #FFFFFF;
+  border: 2rpx solid #E6EFE9;
+  border-radius: 24rpx;
+  margin-top: -34rpx;
+  padding: 32rpx 0;
+  display: flex;
+  box-shadow: 0 4rpx 20rpx rgba(20, 60, 40, 0.07);}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 2rpx solid #EEF5F0;}
+
+.stat-item:last-child {
+  border-right: none;}
+
+.stat-num {
+  font-size: 48rpx; font-weight: 700; color: #15803D;}
+
+.stat-label {
+  font-size: 25rpx; color: #7A8B85; margin-top: 8rpx;}
+
+.card {
+  border: 2rpx solid #E6EFE9;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-top: 24rpx;}
+
+.card-title {
+  font-size: 34rpx; font-weight: 700; color: #14261F; margin-bottom: 24rpx;}
+
+.mode-row {
+  display: flex;}
+
+.mode-item {
+  flex: 1;
+  background: #F4F8F5;
+  border: 2rpx solid #E6EFE9;
+  border-radius: 20rpx;
+  padding: 26rpx 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;}
+
+.mode-item:last-child {
+  margin-right: 0;}
+
+.mode-item.active {
+  background: #E9F6EE; border-color: #15803D;}
+
+.mode-icon {
+  font-size: 44rpx;}
+
+.mode-name {
+  font-size: 29rpx; font-weight: 700; color: #14261F; margin-top: 12rpx;}
+
+.mode-desc {
+  font-size: 23rpx; color: #7A8B85; margin-top: 8rpx; text-align: center;}
+
+.menu-card {
+  padding: 0 30rpx;}
+
+.menu-row {
+  display: flex;
+  align-items: center;
+  height: 110rpx;
+  border-bottom: 2rpx solid #F1F6F2;}
+
+.menu-row:last-child {
+  border-bottom: none;}
+
+.menu-icon {
+  font-size: 36rpx; margin-right: 20rpx;}
+
+.menu-name {
+  flex: 1; font-size: 31rpx; color: #14261F;}
+
+.menu-extra {
+  font-size: 26rpx; color: #9AA8A2; margin-right: 12rpx;}
+
+.menu-arrow {
+  font-size: 34rpx; color: #C2D0C8;}
+
+.switch {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: 999rpx;
+  background: #DFE8E2;
+  padding: 5rpx;
+  display: flex;
+  align-items: center;}
+
+.switch.on {
+  background: #15803D; justify-content: flex-end;}
+
+.switch-dot {
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+  background: #FFFFFF;}
+
+.version {
+  text-align: center;
+  font-size: 24rpx;
+  color: #9AA8A2;
+  margin-top: 44rpx;}
+
+
+/* ===== 超大字体（适老化）覆盖样式 ===== */
+page {
+  background: #FFFFFF;}
+
+.bigfont .page {
+  padding-bottom: 68rpx;}
+
+.bigfont .pad {
+  padding: 0 30rpx;}
+
+.bigfont .profile-hero {
+  background: linear-gradient(160deg, #15803D 0%, #22A855 100%);
+  padding: 50rpx 30rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;}
+
+.bigfont .ph-avatar {
+  width: 140rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 4rpx solid rgba(255, 255, 255, 0.55);
+  color: #FFFFFF;
+  font-size: 74rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;}
+
+.bigfont .ph-name {
+  font-size: 38rpx; font-weight: 700; color: #FFFFFF; margin-top: 22rpx;}
+
+.bigfont .ph-sub {
+  font-size: 26rpx; color: rgba(255, 255, 255, 0.85); margin-top: 10rpx;}
+
+.bigfont .stat-row {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  margin-top: -39rpx;
+  padding: 32rpx 0;
+  display: flex;
+  box-shadow: 0 4rpx 20rpx rgba(20, 60, 40, 0.07);}
+
+.bigfont .stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 2rpx solid #EEF5F0;}
+
+.bigfont .stat-item:last-child {
+  border-right: none;}
+
+.bigfont .stat-num {
+  font-size: 48rpx; font-weight: 700; color: #15803D;}
+
+.bigfont .stat-label {
+  font-size: 25rpx; color: #7A8B85; margin-top: 8rpx;}
+
+.bigfont .card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 34rpx;
+  margin-top: 27rpx;}
+
+.bigfont .card-title {
+  font-size: 34rpx; font-weight: 700; color: #14261F; margin-bottom: 24rpx;}
+
+.bigfont .mode-row {
+  display: flex;}
+
+.bigfont .mode-item {
+  flex: 1;
+  background: #F4F8F5;
+  border-radius: 20rpx;
+  padding: 26rpx 20rpx;
+  margin-right: 23rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3rpx solid transparent;}
+
+.bigfont .mode-item:last-child {
+  margin-right: 0;}
+
+.bigfont .mode-item.active {
+  background: #E9F6EE; border-color: #15803D;}
+
+.bigfont .mode-icon {
+  font-size: 55rpx;}
+
+.bigfont .mode-name {
+  font-size: 29rpx; font-weight: 700; color: #14261F; margin-top: 12rpx;}
+
+.bigfont .mode-desc {
+  font-size: 23rpx; color: #7A8B85; margin-top: 8rpx; text-align: center;}
+
+.bigfont .menu-card {
+  padding: 0 30rpx;}
+
+.bigfont .menu-row {
+  display: flex;
+  align-items: center;
+  height: 125rpx;
+  border-bottom: 2rpx solid #F1F6F2;}
+
+.bigfont .menu-row:last-child {
+  border-bottom: none;}
+
+.bigfont .menu-icon {
+  font-size: 36rpx; margin-right: 20rpx;}
+
+.bigfont .menu-name {
+  flex: 1; font-size: 31rpx; color: #14261F;}
+
+.bigfont .menu-extra {
+  font-size: 26rpx; color: #9AA8A2; margin-right: 12rpx;}
+
+.bigfont .menu-arrow {
+  font-size: 34rpx; color: #C2D0C8;}
+
+.bigfont .switch {
+  width: 88rpx;
+  height: 59rpx;
+  border-radius: 999rpx;
+  background: #DFE8E2;
+  padding: 6rpx;
+  display: flex;
+  align-items: center;}
+
+.bigfont .switch.on {
+  background: #15803D; justify-content: flex-end;}
+
+.bigfont .switch-dot {
+  width: 42rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: #FFFFFF;}
+
+.bigfont .version {
+  text-align: center;
+  font-size: 30rpx;
+  color: #9AA8A2;
+  margin-top: 50rpx;}
+
+

@@ -1,0 +1,9 @@
+{
+  "name": "elder",
+  "version": "1.0.0",
+  "description": "家人档案 CRUD 与绑定权限校验",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
