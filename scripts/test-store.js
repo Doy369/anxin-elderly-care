@@ -1,7 +1,7 @@
 /**
- * 数据层冒烟测试（本地模式）
+ * 数据层冒烟测试
  * 不依赖微信环境，用内存 Map 模拟 wx 存储。
- * 用法：node scripts/test-store.js
+ * 用法：node scripts/test-impl.js
  */
 
 const path = require('path')
@@ -18,7 +18,12 @@ global.wx = {
   cloud: null
 }
 
+const cfg = require(path.join(ROOT, 'utils/config.js'))
 const store = require(path.join(ROOT, 'utils/store.js'))
+const localStore = require(path.join(ROOT, 'utils/local-store.js'))
+
+// 云端模式下 Node 里跑不了真实云调用，直接测本地实现；分发器选择单独断言
+const impl = cfg.useCloud ? localStore : store
 
 let pass = 0
 let fail = 0
@@ -35,15 +40,16 @@ function ok(name, cond, extra) {
 
 async function main() {
   console.log('backend =', store.backend)
-  ok('默认走本地实现', store.backend === 'local')
+  ok('分发器按配置选择后端', store.backend === (cfg.useCloud ? 'cloud' : 'local'), store.backend)
+  console.log('  useCloud =', cfg.useCloud, '| cloudEnv =', cfg.cloudEnv)
 
   // ---- 模式 ----
-  ok('默认模式为 elder', store.getMode() === 'elder')
-  store.setMode('family')
-  ok('模式可写入并读回', store.getMode() === 'family')
+  ok('默认模式为 elder', impl.getMode() === 'elder')
+  impl.setMode('family')
+  ok('模式可写入并读回', impl.getMode() === 'family')
 
   // ---- 订单 ----
-  const empty = await store.getOrders()
+  const empty = await impl.getOrders()
   ok('初始订单为空数组', Array.isArray(empty) && empty.length === 0)
 
   const draft = {
@@ -55,50 +61,50 @@ async function main() {
     createdAt: Date.now(),
     records: []
   }
-  const created = await store.addOrder(draft)
+  const created = await impl.addOrder(draft)
   ok('下单返回 ok', created && created.ok === true, created)
 
-  const list1 = await store.getOrders()
+  const list1 = await impl.getOrders()
   ok('下单后列表长度为 1', list1.length === 1, list1.length)
   ok('新订单排在首位', list1[0].id === 'AX1')
 
-  const one = await store.getOrderById('AX1')
+  const one = await impl.getOrderById('AX1')
   ok('可按 ID 查到订单', !!one && one.serviceName === '居家护理照料')
 
-  const missing = await store.getOrderById('NOT_EXIST')
+  const missing = await impl.getOrderById('NOT_EXIST')
   ok('查不存在的订单返回 null', missing === null)
 
-  const updated = await store.updateOrder('AX1', { status: '已接单' })
+  const updated = await impl.updateOrder('AX1', { status: '已接单' })
   ok('更新状态成功', updated.ok && updated.order.status === '已接单', updated)
 
-  const afterUpdate = await store.getOrderById('AX1')
+  const afterUpdate = await impl.getOrderById('AX1')
   ok('状态已持久化', afterUpdate.status === '已接单')
 
-  const withRecords = await store.updateOrder('AX1', {
+  const withRecords = await impl.updateOrder('AX1', {
     records: [{ id: 'R1', time: '2026-10-26 10:00', worker: '陈师傅', content: '已上门' }]
   })
   ok('追加服务记录成功', withRecords.ok && withRecords.order.records.length === 1)
 
   // ---- 家人档案 ----
-  const m1 = await store.addFamilyMember({ name: '王大爷', relation: '父亲', age: 72 })
+  const m1 = await impl.addFamilyMember({ name: '王大爷', relation: '父亲', age: 72 })
   ok('新增档案返回 ok', m1.ok && !!m1.member.id, m1)
 
-  const members = await store.getFamilyMembers()
+  const members = await impl.getFamilyMembers()
   ok('档案列表长度为 1', members.length === 1)
 
-  const upd = await store.updateFamilyMember(m1.member.id, { note: '有高血压' })
+  const upd = await impl.updateFamilyMember(m1.member.id, { note: '有高血压' })
   ok('更新档案成功', upd.ok && upd.member.note === '有高血压')
 
-  const afterUpd = await store.getFamilyMembers()
+  const afterUpd = await impl.getFamilyMembers()
   ok('档案修改已持久化', afterUpd[0].note === '有高血压')
 
-  const del = await store.removeFamilyMember(m1.member.id)
+  const del = await impl.removeFamilyMember(m1.member.id)
   ok('删除档案成功', del.ok)
-  ok('删除后列表为空', (await store.getFamilyMembers()).length === 0)
+  ok('删除后列表为空', (await impl.getFamilyMembers()).length === 0)
 
   // ---- 删除订单 ----
-  await store.removeOrder('AX1')
-  ok('删除订单后列表为空', (await store.getOrders()).length === 0)
+  await impl.removeOrder('AX1')
+  ok('删除订单后列表为空', (await impl.getOrders()).length === 0)
 
   console.log('\n结果：' + pass + ' 通过 / ' + fail + ' 失败')
   if (fail > 0) process.exit(1)

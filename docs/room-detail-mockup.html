@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>房间详情页 · 设计稿</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #EDF2EC;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #1F2D22;
+    padding: 40px 24px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .page-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: #5F7165;
+    margin-bottom: 32px;
+  }
+  .stage {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .frame { width: 375px; }
+  .caption {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2E7D32;
+    background: #DFF1E1;
+    border-radius: 999px;
+    padding: 6px 14px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .phone {
+    width: 375px;
+    height: 780px;
+    background: #F4F8F2;
+    border-radius: 34px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 18px 48px rgba(38, 68, 45, 0.16);
+    position: relative;
+  }
+  .statusbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1F2D22;
+    background: #FFFFFF;
+  }
+  .navbar {
+    height: 46px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #F1F6F1;
+  }
+  .navbar .back {
+    font-size: 20px;
+    color: #1F2D22;
+    margin-right: 10px;
+    line-height: 1;
+  }
+  .body {
+    flex: 1;
+    overflow: hidden;
+    padding: 16px 16px 0;
+  }
+
+  /* 照片区 */
+  .hero {
+    height: 208px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .hero.empty {
+    background: #FFFFFF;
+    border: 2px dashed #C8DCCC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 30px;
+  }
+  .hero.empty .cam {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #EAF6EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .hero.empty .t1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2D22;
+  }
+  .hero.empty .t2 {
+    font-size: 12px;
+    color: #5F7165;
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* 已上传：CSS 画的客厅示意 */
+  .scene { position: relative; height: 208px; background: linear-gradient(#F6EEE2, #EFE3D2); }
+  .scene .floor {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 62px;
+    background: linear-gradient(#DFC9AC, #D3B995);
+  }
+  .scene .window {
+    position: absolute; left: 28px; top: 26px; width: 96px; height: 92px;
+    background: #EAF3F7; border: 5px solid #F7F3EC; border-radius: 4px;
+  }
+  .scene .window:before, .scene .window:after {
+    content: ""; position: absolute; background: #F7F3EC;
+  }
+  .scene .window:before { left: 50%; top: 0; bottom: 0; width: 5px; margin-left: -2.5px; }
+  .scene .window:after { top: 50%; left: 0; right: 0; height: 5px; margin-top: -2.5px; }
+  .scene .sofa {
+    position: absolute; left: 150px; top: 96px; width: 176px; height: 74px;
+    background: #9FBF9F; border-radius: 12px 12px 8px 8px;
+  }
+  .scene .sofa:before {
+    content: ""; position: absolute; left: 10px; right: 10px; top: -16px; height: 26px;
+    background: #8FB18F; border-radius: 10px 10px 0 0;
+  }
+  .scene .table {
+    position: absolute; left: 96px; top: 148px; width: 82px; height: 26px;
+    background: #C9A97F; border-radius: 6px;
+  }
+  .scene .plant {
+    position: absolute; right: 26px; top: 62px; width: 34px; height: 46px;
+    background: #6FA871; border-radius: 50% 50% 44% 44%;
+  }
+  .scene .tag {
+    position: absolute; right: 10px; bottom: 10px;
+    background: rgba(31, 45, 34, 0.62);
+    color: #fff; font-size: 10px; padding: 3px 9px; border-radius: 999px;
+  }
+  .scene .change {
+    position: absolute; right: 10px; top: 10px;
+    background: rgba(255,255,255,0.92);
+    color: #2E7D32; font-size: 11px; font-weight: 600;
+    padding: 5px 11px; border-radius: 999px;
+  }
+
+  /* 卡片 */
+  .card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 12px rgba(58, 92, 64, 0.05);
+  }
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card-title { font-size: 15px; font-weight: 600; }
+  .card-note { font-size: 11px; color: #5F7165; }
+  .item {
+    display: flex;
+    align-items: flex-start;
+    padding: 7px 0;
+    font-size: 13px;
+    color: #3D4A3F;
+  }
+  .item .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid #A5C9A8; margin-right: 9px; flex-shrink: 0; margin-top: 2px;
+  }
+  .item .dot.on { background: #2E7D32; border-color: #2E7D32; position: relative; }
+  .item .dot.on:after {
+    content: "✓"; color: #fff; font-size: 10px;
+    position: absolute; left: 2.6px; top: -0.5px;
+  }
+
+  /* 设计服务卡 */
+  .design {
+    background: linear-gradient(135deg, #EDF7EE 0%, #DFF1E1 100%);
+    border: 1px solid #C8E6C9;
+  }
+  .design-top { display: flex; align-items: center; margin-bottom: 8px; }
+  .design-icon {
+    width: 34px; height: 34px; border-radius: 10px; background: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; margin-right: 10px;
+  }
+  .design-name { font-size: 15px; font-weight: 600; color: #1F2D22; }
+  .design-price { font-size: 11px; color: #B4552A; background: #FDEEE6; padding: 2px 7px; border-radius: 999px; margin-left: 8px; }
+  .design-desc { font-size: 12px; color: #3D4A3F; line-height: 1.65; }
+  .design-btn {
+    margin-top: 12px; height: 40px; border-radius: 999px;
+    background: #FFFFFF; color: #2E7D32; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* 底部 */
+  .footer {
+    background: #FFFFFF;
+    padding: 12px 16px 26px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 -3px 14px rgba(58, 92, 64, 0.07);
+  }
+  .btn {
+    height: 46px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 600;
+  }
+  .btn.ghost {
+    width: 128px; background: #FFFFFF; color: #2E7D32; border: 1px solid #C8E6C9;
+  }
+  .btn.primary {
+    flex: 1; background: linear-gradient(135deg, #3D9142, #2E7D32); color: #fff;
+  }
+  .note {
+    max-width: 860px;
+    margin-top: 40px;
+    font-size: 13px;
+    color: #3D4A3F;
+    line-height: 1.9;
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+  .note b { color: #2E7D32; }
+</style>
+</head>
+<body>
+
+<div class="page-title">房间详情页 · 客厅</div>
+<div class="page-sub">从「我的家」点进来的页面，两种状态对比</div>
+
+<div class="stage">
+
+  <!-- 状态一：未上传 -->
+  <div class="frame">
+    <div class="caption">① 首次进入 · 未上传实拍图</div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>100%</span></div>
+      <div class="navbar"><span class="back">‹</span>客厅</div>
+
+      <div class="body">
+        <div class="hero empty">
+          <div class="cam">📷</div>
+          <div class="t1">还没有客厅的照片</div>
+          <div class="t2">上传一张实拍，师傅和设计师<br>能看得更准，报价也更准</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">客厅常见隐患</span>
+            <span class="card-note">4 项</span>
+          </div>
+          <div class="item"><span class="dot"></span>地面防滑处理</div>
+          <div class="item"><span class="dot"></span>沙发起身助力扶手</div>
+          <div class="item"><span class="dot"></span>茶几防撞圆角</div>
+          <div class="item"><span class="dot"></span>夜间感应地灯</div>
+        </div>
+
+        <div class="card design">
+          <div class="design-top">
+            <div class="design-icon">🎨</div>
+            <span class="design-name">设计服务</span>
+            <span class="design-price">¥199 抵改造款</span>
+          </div>
+          <div class="design-desc">设计师上门量房，出 3D 效果图与改造方案，改完不满意可调整一次。</div>
+          <div class="design-btn">预约设计师上门</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="btn ghost">上传实拍图</div>
+        <div class="btn primary">预约改造</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 状态二：已上传 -->
+  <div class="frame">
+    <div class="caption">② 上传后 · 显示自己家的图</div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>100%</span></div>
+      <div class="navbar"><span class="back">‹</span>客厅</div>
+
+      <div class="body">
+        <div class="hero">
+          <div class="scene">
+            <div class="floor"></div>
+            <div class="window"></div>
+            <div class="plant"></div>
+            <div class="table"></div>
+            <div class="sofa"></div>
+            <div class="change">更换</div>
+            <div class="tag">您家的客厅 · 10月26日</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">客厅常见隐患</span>
+            <span class="card-note">已检查 1 / 4</span>
+          </div>
+          <div class="item"><span class="dot on"></span>地面防滑处理</div>
+          <div class="item"><span class="dot"></span>沙发起身助力扶手</div>
+          <div class="item"><span class="dot"></span>茶几防撞圆角</div>
+          <div class="item"><span class="dot"></span>夜间感应地灯</div>
+        </div>
+
+        <div class="card design">
+          <div class="design-top">
+            <div class="design-icon">🎨</div>
+            <span class="design-name">设计服务</span>
+            <span class="design-price">¥199 抵改造款</span>
+          </div>
+          <div class="design-desc">设计师上门量房，出 3D 效果图与改造方案，改完不满意可调整一次。</div>
+          <div class="design-btn">预约设计师上门</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="btn ghost">更换照片</div>
+        <div class="btn primary">预约改造</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <b>这版的设计考虑：</b><br>
+  1. 照片区是页面第一眼，没有图时用虚线框 + 相机图标引导上传，不空着。<br>
+  2. 上传后照片右上有「更换」、右下有拍摄日期，避免以后搞不清是哪次拍的。<br>
+  3. 「设计服务」放在隐患清单下方、底部按钮上方，是独立卡片带价格锚点，和「预约改造」区分开——一个是先设计、一个是直接施工。<br>
+  4. 隐患清单做成可勾选，检查过的打勾，对应你之前六宫格里「点击房间查看详情」的诉求。<br>
+  5. 底部双按钮：左边上传/更换（次要），右边预约改造（主要）。
+</div>
+
+</body>
+</html>

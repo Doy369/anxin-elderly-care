@@ -1,5 +1,6 @@
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .page {
   padding-bottom: 60rpx;}
@@ -11,20 +12,20 @@ page {
   padding: 32rpx 30rpx 8rpx;}
 
 .ph-title {
-  font-size: 40rpx; font-weight: 700; color: #14261F; display: block;}
+  font-size: 40rpx; font-weight: 700; color: #1F2D22; display: block;}
 
 .ph-sub {
-  font-size: 26rpx; color: #7A8B85; margin-top: 12rpx; display: block; line-height: 1.6;}
+  font-size: 26rpx; color: #5F7165; margin-top: 12rpx; display: block; line-height: 1.6;}
 
 .card {
-  border: 2rpx solid #E6EFE9;
+  border: 2rpx solid #EDF3ED;
   background: #FFFFFF;
   border-radius: 24rpx;
   padding: 30rpx;
   margin-top: 24rpx;}
 
 .card-title {
-  font-size: 34rpx; font-weight: 700; color: #14261F; margin-bottom: 24rpx;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22; margin-bottom: 24rpx;}
 
 .member-card {
   display: flex; align-items: flex-start;}
@@ -33,8 +34,8 @@ page {
   width: 92rpx;
   height: 92rpx;
   border-radius: 50%;
-  background: #E9F6EE;
-  color: #15803D;
+  background: #EAF6EB;
+  color: #2E7D32;
   font-size: 40rpx;
   font-weight: 700;
   display: flex;
@@ -50,29 +51,29 @@ page {
   display: flex; align-items: center; flex-wrap: wrap;}
 
 .mc-name {
-  font-size: 34rpx; font-weight: 700; color: #14261F; margin-right: 16rpx;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22; margin-right: 16rpx;}
 
 .mc-relation {
   font-size: 23rpx;
-  background: #E9F6EE;
-  color: #15803D;
+  background: #EAF6EB;
+  color: #2E7D32;
   padding: 4rpx 16rpx;
   border-radius: 999rpx;
   margin-right: 12rpx;}
 
 .mc-age {
-  font-size: 25rpx; color: #7A8B85;}
+  font-size: 25rpx; color: #5F7165;}
 
 .mc-phone, .mc-addr, .mc-note, .mc-count {
   font-size: 26rpx;
-  color: #55665E;
+  color: #6B7B6E;
   margin-top: 10rpx;}
 
 .mc-note {
-  color: #7A8B85; line-height: 1.6;}
+  color: #5F7165; line-height: 1.6;}
 
 .mc-count {
-  color: #15803D;}
+  color: #2E7D32;}
 
 .mc-actions {
   display: flex; margin-top: 20rpx; flex-wrap: wrap;}
@@ -83,7 +84,7 @@ page {
   font-size: 25rpx;
   padding: 0 26rpx;
   border-radius: 999rpx;
-  background: #15803D;
+  background: #2E7D32;
   color: #FFFFFF;
   margin: 0 16rpx 0 0;
   border: none;
@@ -93,10 +94,10 @@ page {
   border: none;}
 
 .chip-btn.ghost {
-  background: #FFFFFF; color: #15803D; border: 2rpx solid #15803D;}
+  background: #FFFFFF; color: #2E7D32; border: 2rpx solid #2E7D32;}
 
 .chip-btn.danger {
-  background: #FFFFFF; color: #5F7168; border: 2rpx solid #E4EAE6;}
+  background: #FFFFFF; color: #6B7B6E; border: 2rpx solid #E8F0E9;}
 
 .add-btn {
   margin-top: 36rpx; height: 104rpx; font-size: 34rpx;}
@@ -111,24 +112,25 @@ page {
   width: 100%;}
 
 .btn-primary {
-  background: #15803D; color: #FFFFFF;}
+  background: #2E7D32; color: #FFFFFF;}
 
 
 /* 弹层 */
 .mask {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(20, 60, 40, 0.45);
+  background: rgba(58, 92, 64, 0.45);
   z-index: 100;
   display: flex;
   align-items: flex-end;}
 
 .sheet {
   width: 100%;
-  border: 2rpx solid #E6EFE9;
+  border: 2rpx solid #EDF3ED;
   background: #FFFFFF;
   border-radius: 32rpx 32rpx 0 0;
   max-height: 88vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;}
 
@@ -138,16 +140,18 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2rpx solid #E6EFE9;}
+  border-bottom: 2rpx solid #EDF3ED;}
 
 .sheet-title {
-  font-size: 34rpx; font-weight: 700; color: #14261F;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22;}
 
 .sheet-close {
-  font-size: 32rpx; color: #9AA8A2; padding: 0 10rpx;}
+  font-size: 32rpx; color: #5F7165; padding: 0 10rpx;}
 
 .sheet-body {
-  padding: 30rpx 30rpx 60rpx;}
+  flex: 1;
+  min-height: 0;
+  padding: 30rpx 30rpx 20rpx;}
 
 .form-item {
   margin-bottom: 34rpx;}
@@ -155,12 +159,12 @@ page {
 .form-label {
   font-size: 30rpx;
   font-weight: 600;
-  color: #14261F;
+  color: #1F2D22;
   margin-bottom: 16rpx;
   display: block;}
 
 .required {
-  color: #0F7A38; margin-left: 8rpx;}
+  color: #C4512E; margin-left: 8rpx;}
 
 .input {
   width: 100%;
@@ -169,7 +173,7 @@ page {
   border-radius: 16rpx;
   padding: 0 28rpx;
   font-size: 32rpx;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .textarea {
   width: 100%;
@@ -178,7 +182,7 @@ page {
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   font-size: 30rpx;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .rel-row {
   display: flex; flex-wrap: wrap;}
@@ -195,16 +199,22 @@ page {
   border: 2rpx solid transparent;}
 
 .rel-item.active {
-  background: #E9F6EE; border-color: #15803D;}
+  background: #EAF6EB; border-color: #2E7D32;}
 
 .rel-text {
-  font-size: 28rpx; color: #3D4F49;}
+  font-size: 28rpx; color: #3D4A3F;}
 
 .rel-item.active .rel-text {
-  color: #15803D; font-weight: 700;}
+  color: #2E7D32; font-weight: 700;}
+
+.sheet-foot {
+  flex-shrink: 0;
+  padding: 18rpx 30rpx calc(24rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  border-top: 2rpx solid #F1F6F1;}
 
 .save-btn {
-  height: 104rpx; font-size: 34rpx; margin-top: 10rpx;}
+  height: 96rpx; font-size: 32rpx; margin: 0;}
 
 .empty {
   padding: 120rpx 40rpx; text-align: center;}
@@ -213,12 +223,13 @@ page {
   font-size: 96rpx;}
 
 .empty-text {
-  display: block; font-size: 30rpx; color: #7A8B85; margin-top: 24rpx; line-height: 1.6;}
+  display: block; font-size: 30rpx; color: #5F7165; margin-top: 24rpx; line-height: 1.6;}
 
 
 /* ===== 超大字体（适老化）覆盖样式 ===== */
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .bigfont .page {
   padding-bottom: 68rpx;}
@@ -230,10 +241,10 @@ page {
   padding: 32rpx 30rpx 8rpx;}
 
 .bigfont .ph-title {
-  font-size: 40rpx; font-weight: 700; color: #14261F; display: block;}
+  font-size: 40rpx; font-weight: 700; color: #1F2D22; display: block;}
 
 .bigfont .ph-sub {
-  font-size: 26rpx; color: #7A8B85; margin-top: 12rpx; display: block; line-height: 1.6;}
+  font-size: 26rpx; color: #5F7165; margin-top: 12rpx; display: block; line-height: 1.6;}
 
 .bigfont .card {
   background: #FFFFFF;
@@ -242,7 +253,7 @@ page {
   margin-top: 27rpx;}
 
 .bigfont .card-title {
-  font-size: 34rpx; font-weight: 700; color: #14261F; margin-bottom: 24rpx;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22; margin-bottom: 24rpx;}
 
 .bigfont .member-card {
   display: flex; align-items: flex-start;}
@@ -251,8 +262,8 @@ page {
   width: 92rpx;
   height: 105rpx;
   border-radius: 50%;
-  background: #E9F6EE;
-  color: #15803D;
+  background: #EAF6EB;
+  color: #2E7D32;
   font-size: 50rpx;
   font-weight: 700;
   display: flex;
@@ -268,32 +279,32 @@ page {
   display: flex; align-items: center; flex-wrap: wrap;}
 
 .bigfont .mc-name {
-  font-size: 34rpx; font-weight: 700; color: #14261F; margin-right: 16rpx;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22; margin-right: 16rpx;}
 
 .bigfont .mc-relation {
   font-size: 29rpx;
-  background: #E9F6EE;
-  color: #15803D;
+  background: #EAF6EB;
+  color: #2E7D32;
   padding: 4rpx 16rpx;
   border-radius: 999rpx;
   margin-right: 14rpx;}
 
 .bigfont .mc-age {
-  font-size: 25rpx; color: #7A8B85;}
+  font-size: 25rpx; color: #5F7165;}
 
 .bigfont .mc-phone,
 .bigfont .mc-addr,
 .bigfont .mc-note,
 .bigfont .mc-count {
   font-size: 32rpx;
-  color: #55665E;
+  color: #6B7B6E;
   margin-top: 11rpx;}
 
 .bigfont .mc-note {
-  color: #7A8B85; line-height: 1.6;}
+  color: #5F7165; line-height: 1.6;}
 
 .bigfont .mc-count {
-  color: #15803D;}
+  color: #2E7D32;}
 
 .bigfont .mc-actions {
   display: flex; margin-top: 20rpx; flex-wrap: wrap;}
@@ -304,7 +315,7 @@ page {
   font-size: 31rpx;
   padding: 0 26rpx;
   border-radius: 999rpx;
-  background: #15803D;
+  background: #2E7D32;
   color: #FFFFFF;
   margin: 0 16rpx 0 0;
   border: none;
@@ -314,10 +325,10 @@ page {
   border: none;}
 
 .bigfont .chip-btn.ghost {
-  background: #FFFFFF; color: #15803D; border: 2rpx solid #15803D;}
+  background: #FFFFFF; color: #2E7D32; border: 2rpx solid #2E7D32;}
 
 .bigfont .chip-btn.danger {
-  background: #FFFFFF; color: #5F7168; border: 2rpx solid #E4EAE6;}
+  background: #FFFFFF; color: #6B7B6E; border: 2rpx solid #E8F0E9;}
 
 .bigfont .add-btn {
   margin-top: 36rpx; height: 104rpx; font-size: 34rpx;}
@@ -332,12 +343,12 @@ page {
   width: 100%;}
 
 .bigfont .btn-primary {
-  background: #15803D; color: #FFFFFF;}
+  background: #2E7D32; color: #FFFFFF;}
 
 .bigfont .mask {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(20, 60, 40, 0.45);
+  background: rgba(58, 92, 64, 0.45);
   z-index: 100;
   display: flex;
   align-items: flex-end;}
@@ -347,6 +358,7 @@ page {
   background: #FFFFFF;
   border-radius: 32rpx 32rpx 0 0;
   max-height: 88vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;}
 
@@ -356,16 +368,18 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2rpx solid #E6EFE9;}
+  border-bottom: 2rpx solid #EDF3ED;}
 
 .bigfont .sheet-title {
-  font-size: 34rpx; font-weight: 700; color: #14261F;}
+  font-size: 34rpx; font-weight: 700; color: #1F2D22;}
 
 .bigfont .sheet-close {
-  font-size: 32rpx; color: #9AA8A2; padding: 0 10rpx;}
+  font-size: 32rpx; color: #5F7165; padding: 0 10rpx;}
 
 .bigfont .sheet-body {
-  padding: 30rpx 30rpx 60rpx;}
+  flex: 1;
+  min-height: 0;
+  padding: 30rpx 30rpx 20rpx;}
 
 .bigfont .form-item {
   margin-bottom: 39rpx;}
@@ -373,12 +387,12 @@ page {
 .bigfont .form-label {
   font-size: 37rpx;
   font-weight: 600;
-  color: #14261F;
+  color: #1F2D22;
   margin-bottom: 18rpx;
   display: block;}
 
 .bigfont .required {
-  color: #0F7A38; margin-left: 8rpx;}
+  color: #C4512E; margin-left: 8rpx;}
 
 .bigfont .input {
   width: 100%;
@@ -387,7 +401,7 @@ page {
   border-radius: 16rpx;
   padding: 0 28rpx;
   font-size: 40rpx;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .bigfont .textarea {
   width: 100%;
@@ -396,7 +410,7 @@ page {
   border-radius: 16rpx;
   padding: 24rpx 28rpx;
   font-size: 37rpx;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .bigfont .rel-row {
   display: flex; flex-wrap: wrap;}
@@ -413,13 +427,13 @@ page {
   border: 2rpx solid transparent;}
 
 .bigfont .rel-item.active {
-  background: #E9F6EE; border-color: #15803D;}
+  background: #EAF6EB; border-color: #2E7D32;}
 
 .bigfont .rel-text {
-  font-size: 28rpx; color: #3D4F49;}
+  font-size: 28rpx; color: #3D4A3F;}
 
 .bigfont .rel-item.active .rel-text {
-  color: #15803D; font-weight: 700;}
+  color: #2E7D32; font-weight: 700;}
 
 .bigfont .save-btn {
   height: 104rpx; font-size: 34rpx; margin-top: 10rpx;}
@@ -431,6 +445,6 @@ page {
   font-size: 119rpx;}
 
 .bigfont .empty-text {
-  display: block; font-size: 30rpx; color: #7A8B85; margin-top: 24rpx; line-height: 1.6;}
+  display: block; font-size: 30rpx; color: #5F7165; margin-top: 24rpx; line-height: 1.6;}
 
 

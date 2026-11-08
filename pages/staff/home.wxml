@@ -1,0 +1,93 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="top pad">
+    <view class="top-left">
+      <text class="top-title">{{staff.name || '师傅端'}}</text>
+      <text class="top-sub" wx:if="{{staff}}">今天有 {{pool.length}} 单待接 · {{mine.length}} 单在我手上</text>
+      <text class="top-sub" wx:else>完成认证后即可接单</text>
+    </view>
+  </view>
+
+  <!-- 未认证 -->
+  <view class="pad" wx:if="{{noAuth}}">
+    <view class="auth-card">
+      <text class="auth-emoji">🛠️</text>
+      <text class="auth-title">还不是认证师傅</text>
+      <text class="auth-desc">输入管理员发给你的激活码，填上姓名和手机号即可开通接单权限。</text>
+      <button class="btn btn-primary btn-block auth-btn" bindtap="goActivate">去认证</button>
+    </view>
+  </view>
+
+  <block wx:else>
+    <view class="seg pad">
+      <view class="seg-item {{tab === 'pool' ? 'on' : ''}}" data-tab="pool" bindtap="switchTab">
+        工单池<text class="seg-num" wx:if="{{pool.length > 0}}">{{pool.length}}</text>
+      </view>
+      <view class="seg-item {{tab === 'mine' ? 'on' : ''}}" data-tab="mine" bindtap="switchTab">
+        我的工单<text class="seg-num" wx:if="{{mine.length > 0}}">{{mine.length}}</text>
+      </view>
+    </view>
+
+    <view class="pad">
+      <!-- 工单池 -->
+      <block wx:if="{{tab === 'pool'}}">
+        <view class="empty" wx:if="{{pool.length === 0}}">
+          <text class="empty-icon">📭</text>
+          <text class="empty-text">暂时没有待接的工单</text>
+          <text class="empty-sub">下拉刷新看看</text>
+        </view>
+
+        <view class="w-card" wx:for="{{pool}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+          <view class="wc-top">
+            <text class="wc-emoji">{{item.icon}}</text>
+            <view class="wc-body">
+              <text class="wc-name">{{item.serviceName}}</text>
+              <text class="wc-time">{{item.date}} {{item.timeSlot}}</text>
+            </view>
+            <text class="wc-amount">{{item.amountText}}</text>
+          </view>
+
+          <view class="wc-addr">📍 {{item.address}}</view>
+
+          <view class="wc-tags">
+            <text class="tag" wx:if="{{item.roomLabel}}">{{item.roomLabel}}</text>
+            <text class="tag" wx:if="{{item.contactName}}">{{item.contactName}}</text>
+          </view>
+
+          <view class="wc-foot">
+            <text class="wc-hint">接单后可查看联系方式</text>
+            <button class="btn btn-primary btn-sm wc-btn" catchtap="acceptOrder" data-id="{{item.id}}">接这一单</button>
+          </view>
+        </view>
+      </block>
+
+      <!-- 我的工单 -->
+      <block wx:else>
+        <view class="empty" wx:if="{{mine.length === 0}}">
+          <text class="empty-icon">🧰</text>
+          <text class="empty-text">还没有接过的工单</text>
+          <text class="empty-sub">去工单池看看</text>
+        </view>
+
+        <view class="w-card" wx:for="{{mine}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+          <view class="wc-top">
+            <text class="wc-emoji">{{item.icon}}</text>
+            <view class="wc-body">
+              <text class="wc-name">{{item.serviceName}}</text>
+              <text class="wc-time">{{item.date}} {{item.timeSlot}}</text>
+            </view>
+            <text class="wc-status">{{item.status}}</text>
+          </view>
+
+          <view class="wc-addr">📍 {{item.address}}</view>
+
+          <view class="wc-foot">
+            <text class="wc-hint">{{item.contactName}} · {{item.phone}}</text>
+            <text class="wc-more">详情 ›</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+
+</view>

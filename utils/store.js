@@ -43,5 +43,31 @@ module.exports = {
   getFamilyMembers: impl.getFamilyMembers,
   addFamilyMember: impl.addFamilyMember,
   updateFamilyMember: impl.updateFamilyMember,
-  removeFamilyMember: impl.removeFamilyMember
+  removeFamilyMember: impl.removeFamilyMember,
+
+  // 评价
+  rateOrder: impl.rateOrder,
+
+  // 房屋
+  getHomes: impl.getHomes,
+  addHome: impl.addHome,
+  updateHome: impl.updateHome,
+  removeHome: impl.removeHome,
+
+  // 房间资产（照片 + 隐患勾选）
+  getRoomAssets: impl.getRoomAssets,
+  saveRoomPhoto: impl.saveRoomPhoto,
+  removeRoomPhoto: impl.removeRoomPhoto,
+  setRoomChecks: impl.setRoomChecks,
+  uploadImage: impl.uploadImage,
+
+  // 服务人员端
+  getStaffMe: impl.getStaffMe,
+  activateStaff: impl.activateStaff,
+  getOrderPool: impl.getOrderPool,
+  getMyWorkOrders: impl.getMyWorkOrders,
+  acceptOrder: impl.acceptOrder,
+  arriveOrder: impl.arriveOrder,
+  finishOrder: impl.finishOrder,
+  uploadWorkPhoto: impl.uploadWorkPhoto
 }

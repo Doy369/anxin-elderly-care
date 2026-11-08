@@ -1,6 +1,6 @@
 const app = getApp()
 const store = require('../../utils/store')
-const data = require('../../utils/data')
+const design = require('../../utils/design')
 
 function pad(n) {
   return n < 10 ? '0' + n : String(n)
@@ -17,203 +17,199 @@ function defaultDate() {
   return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
 }
 
-function formatCount(n) {
-  if (n >= 10000) return (n / 10000).toFixed(1) + '万'
-  return String(n)
+// 从「我的家」带过来的房间名可能是编码过的，解不开就原样用
+function safeDecode(v) {
+  if (!v) return ''
+  try {
+    return decodeURIComponent(v)
+  } catch (e) {
+    return v
+  }
 }
 
 Page({
   data: {
-    service: {},
-    timeSlots: data.TIME_SLOTS,
-    today: todayStr(),
     bigFont: false,
-    mode: 'elder',
-    members: [],
-    quantityLabel: '服务数量',
-    quantityHint: '',
-    estimate: '0',
-    locating: false,
+    step: 1,
+    steps: ['选择', '预约信息', '确认提交'],
+    service: {},
+    companions: design.COMPANIONS,
+    today: todayStr(),
+    dateLabel: '服务日期',
+    timeText: '',
+    companionName: '',
+    roomName: '',
+    homeId: '',
+    roomType: '',
+    remarkLen: 0,
     form: {
-      forWhom: '本人',
-      forWhomId: '',
+      primary: '',
+      primaryIndex: -1,
+      date: '',
+      time: '',
+      companion: 'pro',
       contactName: '',
       phone: '',
       address: '',
-      date: '',
-      timeSlot: '',
-      quantity: 1,
-      remark: '',
-      familyPhone: ''
+      remark: ''
     }
   },
 
   onLoad(options) {
-    const service = data.getServiceById(options.id)
-    if (!service) {
-      wx.showToast({ title: '服务不存在', icon: 'none' })
-      setTimeout(function () {
-        wx.navigateBack()
-      }, 1200)
-      return
-    }
-
-    this.setData({ bigFont: app.globalData.bigFont })
-
-    const serviceCopy = Object.assign({}, service, {
-      orderCountText: formatCount(service.orderCount)
-    })
-
-    // 按时长计费的服务，数量单位为小时/次；改造类按套
-    const isHourly = ['install'].indexOf(service.category) === -1
-    const quantityLabel = isHourly ? service.unit + '数（如小时/次）' : '施工套数'
+    const service = design.getService(options.service) || design.getService('hospital')
+    const shortName = (service.primaryLabel || '项目').replace('选择', '')
+    const isHospital = service.id === 'hospital'
+    const roomName = safeDecode(options.from)
 
     this.setData({
-      service: serviceCopy,
-      quantityLabel: quantityLabel,
-      quantityHint: isHourly ? service.unit + ' × ¥' + service.price + ' 起' : '以现场测量为准'
+      bigFont: app.globalData.bigFont,
+      service: service,
+      roomName: roomName,
+      homeId: options.homeId || '',
+      roomType: options.room || '',
+      steps: ['选择' + shortName, '预约信息', '确认提交'],
+      dateLabel: isHospital ? '就诊日期' : '服务日期',
+      form: Object.assign({}, this.data.form, {
+        primary: '',
+        primaryIndex: -1,
+        date: defaultDate(),
+        companion: service.companion ? 'pro' : ''
+      }),
+      companionName: service.companion ? '专业陪诊员' : ''
     })
 
-    if (options.focus === 'detail') {
-      setTimeout(function () {
-        wx.pageScrollTo({ selector: '#detail', duration: 300 })
-      }, 200)
-    }
+    wx.setNavigationBarTitle({ title: roomName ? (roomName + '改造') : service.name })
+
+    if (options.homeId) this.prefillAddress(options.homeId)
   },
 
-  onShow() {
+  /** 从房间进来时，把房屋地址和房间名带进表单，少让用户填一遍 */
+  prefillAddress(homeId) {
     const self = this
-    self.setData({
-      bigFont: app.globalData.bigFont,
-      mode: app.globalData.mode || store.getMode()
-    })
+    store.getHomes().then(function (homes) {
+      const hit = (homes || []).find(function (h) { return h.id === homeId })
+      if (!hit) return
 
-    store.getFamilyMembers().then(function (members) {
-      self.setData({ members: members })
-    }).catch(function () {
-      self.setData({ members: [] })
+      const patch = {}
+      if (!self.data.form.address && hit.address) {
+        patch['form.address'] = hit.address
+      }
+      if (hit.remark && !self.data.form.remark) {
+        patch['form.remark'] = String(hit.remark).slice(0, 20)
+        patch.remarkLen = patch['form.remark'].length
+      }
+      if (Object.keys(patch).length > 0) self.setData(patch)
+    }).catch(function () {})
+  },
+
+  pickPrimary(e) {
+    const index = Number(e.currentTarget.dataset.index)
+    const option = this.data.service.primaryOptions[index]
+    this.setData({
+      'form.primaryIndex': index,
+      'form.primary': option
+    })
+  },
+
+  onDate(e) {
+    this.setData({ 'form.date': e.detail.value })
+  },
+
+  onTime(e) {
+    const value = e.detail.value
+    const hour = Number(value.split(':')[0])
+    const text = (hour < 12 ? '上午 ' : '下午 ') + value
+    this.setData({
+      'form.time': value,
+      timeText: text
+    })
+  },
+
+  pickCompanion(e) {
+    const id = e.currentTarget.dataset.id
+    const hit = this.data.companions.find(function (c) {
+      return c.id === id
+    })
+    this.setData({
+      'form.companion': id,
+      companionName: hit ? hit.name : ''
     })
   },
 
   onInput(e) {
     const field = e.currentTarget.dataset.field
     const value = e.detail.value
-    const form = Object.assign({}, this.data.form)
-    form[field] = value
-    this.setData({ form: form })
-    if (field === 'quantity') this.recalc()
+    const patch = {}
+    patch['form.' + field] = value
+    if (field === 'remark') patch.remarkLen = value.length
+    this.setData(patch)
   },
 
-  pickWho(e) {
-    const form = Object.assign({}, this.data.form)
-    form.forWhom = e.currentTarget.dataset.name
-    form.forWhomId = e.currentTarget.dataset.id || ''
-    this.setData({ form: form })
+  prevStep() {
+    if (this.data.step > 1) {
+      this.setData({ step: this.data.step - 1 })
+    }
   },
 
-  goFamily() {
-    wx.navigateTo({ url: '/pages/family/family' })
-  },
+  nextStep() {
+    const step = this.data.step
 
-  onDateChange(e) {
-    const form = Object.assign({}, this.data.form)
-    form.date = e.detail.value
-    this.setData({ form: form })
-  },
-
-  pickSlot(e) {
-    const form = Object.assign({}, this.data.form)
-    form.timeSlot = e.currentTarget.dataset.slot
-    this.setData({ form: form })
-  },
-
-  plusQty() {
-    const form = Object.assign({}, this.data.form)
-    form.quantity = Math.min(99, (Number(form.quantity) || 0) + 1)
-    this.setData({ form: form })
-    this.recalc()
-  },
-
-  minusQty() {
-    const form = Object.assign({}, this.data.form)
-    form.quantity = Math.max(1, (Number(form.quantity) || 1) - 1)
-    this.setData({ form: form })
-    this.recalc()
-  },
-
-  useCurrentLocation() {
-    this.setData({ locating: true })
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        this.setData({ locating: false })
-        wx.showToast({ title: '已定位，请补充详细门牌', icon: 'none' })
-      },
-      fail: () => {
-        this.setData({ locating: false })
-        wx.showModal({
-          title: '无法获取位置',
-          content: '请检查定位权限，或直接手动填写详细地址',
-          showCancel: false,
-          confirmText: '知道了'
-        })
+    if (step === 1) {
+      if (this.data.form.primaryIndex < 0) {
+        wx.showToast({ title: '请先选择' + this.data.steps[0].replace('选择', ''), icon: 'none' })
+        return
       }
-    })
-  },
-
-  recalc() {
-    const svc = this.data.service
-    const qty = Number(this.data.form.quantity) || 1
-    const total = (Number(svc.price) || 0) * qty
-    this.setData({ estimate: String(total) })
-  },
-
-  validate() {
-    const f = this.data.form
-    if (!f.contactName.trim()) return '请填写联系人姓名'
-    if (!/^1\d{10}$/.test(f.phone.trim())) return '请填写正确的11位手机号'
-    if (!f.address.trim()) return '请填写上门地址'
-    if (!f.date) return '请选择上门日期'
-    if (!f.timeSlot) return '请选择上门时段'
-    if (f.familyPhone && !/^1\d{10}$/.test(f.familyPhone.trim())) return '家属手机号格式不正确'
-    return ''
-  },
-
-  submit() {
-    const err = this.validate()
-    if (err) {
-      wx.showModal({ title: '还差一点', content: err, showCancel: false, confirmText: '去填写' })
+      this.setData({ step: 2 })
       return
     }
 
-    const svc = this.data.service
+    if (step === 2) {
+      const f = this.data.form
+      if (!f.date) return wx.showToast({ title: '请选择日期', icon: 'none' })
+      if (!f.time) return wx.showToast({ title: '请选择时间', icon: 'none' })
+      if (!f.contactName.trim()) return wx.showToast({ title: '请填写联系人', icon: 'none' })
+      if (!/^1\d{10}$/.test(f.phone.trim())) return wx.showToast({ title: '手机号格式不对', icon: 'none' })
+      if (!f.address.trim()) return wx.showToast({ title: '请填写服务地址', icon: 'none' })
+      this.setData({ step: 3 })
+      return
+    }
+
+    this.submit()
+  },
+
+  submit() {
+    if (this.data.submitting) return
+    this.setData({ submitting: true })
+
     const f = this.data.form
-    const qty = Number(f.quantity) || 1
-    const now = Date.now()
+    const svc = this.data.service
+    const roomName = this.data.roomName
+
+    // 房间和选择项都写进备注，师傅一眼知道改哪里
+    const prefix = (roomName ? '【' + roomName + '】' : '') + (f.primary ? '【' + f.primary + '】' : '')
 
     const order = {
-      id: 'AX' + now,
-      userId: '',
-      elderId: f.forWhomId || '',
       serviceId: svc.id,
       serviceName: svc.name,
       icon: svc.icon,
-      provider: svc.provider,
-      unit: svc.unit,
+      homeId: this.data.homeId,
+      roomType: this.data.roomType,
+      provider: '安心服务',
+      unit: svc.unitDesc || '次',
       price: Number(svc.price) || 0,
-      quantity: qty,
-      amount: (Number(svc.price) || 0) * qty,
-      forWhom: f.forWhom,
+      quantity: 1,
+      amount: Number(svc.price) || 0,
+      forWhom: f.contactName.trim(),
       contactName: f.contactName.trim(),
       phone: f.phone.trim(),
       address: f.address.trim(),
       date: f.date,
-      timeSlot: f.timeSlot,
-      remark: f.remark.trim(),
-      familyPhone: f.familyPhone.trim(),
-      bookedBy: this.data.mode === 'family' ? '子女代下单' : '本人下单',
+      timeSlot: this.data.timeText || f.time,
+      remark: prefix + (f.remark || ''),
+      familyPhone: '',
+      bookedBy: app.globalData.mode === 'family' ? '子女代下单' : '本人下单',
       status: '待接单',
-      createdAt: now,
+      createdAt: Date.now(),
       records: []
     }
 
@@ -221,6 +217,8 @@ Page({
 
     store.addOrder(order).then((res) => {
       wx.hideLoading()
+      this.setData({ submitting: false })
+
       if (!res || res.ok === false) {
         wx.showModal({
           title: '提交失败',
@@ -231,23 +229,23 @@ Page({
       }
 
       const created = res.order || order
-      const showId = created.orderNo || created.id || order.id
 
       wx.showModal({
         title: '预约成功',
-        content: '服务人员将尽快与您电话确认上门时间。\n\n订单号：' + showId + '\n可在「我的订单」查看进度',
+        content: '服务人员会尽快与您电话确认。\n服务项目：' + svc.name,
         confirmText: '查看订单',
-        cancelText: '返回首页',
+        cancelText: '返回',
         success: (r) => {
-          if (r.confirm) {
+          if (r.confirm && created.id) {
             wx.redirectTo({ url: '/pages/order-detail/order-detail?id=' + created.id })
           } else {
-            wx.switchTab({ url: '/pages/index/index' })
+            wx.switchTab({ url: '/pages/home/home' })
           }
         }
       })
     }).catch((err) => {
       wx.hideLoading()
+      this.setData({ submitting: false })
       wx.showModal({
         title: '提交失败',
         content: err.message || '网络异常，请稍后重试',

@@ -6,7 +6,8 @@ function statusKey(status) {
   if (status === '待接单') return 'pending'
   if (status === '已接单') return 'accepted'
   if (status === '服务中') return 'serving'
-  if (status === '待评价') return 'done'
+  // 待评价要单独一档：它需要用户动手，不能和已完成一个颜色
+  if (status === '待评价') return 'rate'
   if (status === '已完成') return 'done'
   return 'canceled'
 }
@@ -72,18 +73,39 @@ Page({
   },
 
   contactWorker(e) {
+    const id = e.currentTarget.dataset.id
+    const hit = (this.data.list || []).find(function (o) { return o.id === id })
+
+    if (!hit || !hit.staffName) {
+      wx.showModal({
+        title: '还没有服务人员',
+        content: '接单后这里会显示师傅的姓名和电话。',
+        showCancel: false
+      })
+      return
+    }
+
+    if (!hit.staffPhone) {
+      wx.showModal({
+        title: hit.staffName,
+        content: '师傅还没留下联系电话，可以先联系客服转接。',
+        showCancel: false
+      })
+      return
+    }
+
     wx.showModal({
-      title: '联系服务人员',
-      content: '陈师傅\n138 0000 0000\n服务时间 8:00 - 20:00',
+      title: '联系' + hit.staffName,
+      content: hit.staffPhone,
       confirmText: '拨打',
       cancelText: '取消',
       success(res) {
-        if (res.confirm) wx.makePhoneCall({ phoneNumber: '13800000000' })
+        if (res.confirm) wx.makePhoneCall({ phoneNumber: hit.staffPhone })
       }
     })
   },
 
   goServices() {
-    wx.switchTab({ url: '/pages/services/services' })
+    wx.switchTab({ url: '/pages/help/help' })
   }
 })

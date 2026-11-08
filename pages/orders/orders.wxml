@@ -41,10 +41,10 @@
       </view>
 
       <view class="oc-foot">
-        <text class="oc-amount">¥{{item.amount}}</text>
+        <text class="oc-amount">{{item.amount > 0 ? '¥' + item.amount : '费用面议'}}</text>
         <view class="oc-actions">
           <button class="btn btn-ghost btn-sm" catchtap="contactWorker" data-id="{{item.id}}">联系师傅</button>
-          <button class="btn btn-primary btn-sm" catchtap="goDetail" data-id="{{item.id}}">详情</button>
+          <button class="btn btn-primary btn-sm" catchtap="goDetail" data-id="{{item.id}}">{{item.status === '待评价' ? '去评价' : '详情'}}</button>
         </view>
       </view>
     </view>

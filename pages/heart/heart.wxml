@@ -1,0 +1,53 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="head pad">
+    <text class="head-title">心语</text>
+    <text class="head-sub">说说话，心里松快些</text>
+  </view>
+
+  <view class="pad">
+
+    <view class="quote-card">
+      <text class="quote-mark">“</text>
+      <text class="quote-text">{{quote}}</text>
+      <text class="quote-date">{{todayText}}</text>
+    </view>
+
+    <view class="mood-card">
+      <text class="mood-title">今天心情怎么样？</text>
+      <view class="mood-row">
+        <view class="mood-item {{mood === item.id ? 'on' : ''}}" wx:for="{{moods}}" wx:key="id" data-id="{{item.id}}" bindtap="pickMood">
+          <text class="mood-emoji">{{item.emoji}}</text>
+          <text class="mood-name">{{item.name}}</text>
+        </view>
+      </view>
+      <text class="mood-tip" wx:if="{{mood}}">已记录，谢谢您愿意说出来</text>
+    </view>
+
+    <view class="section-head">
+      <text class="section-title">健康小知识</text>
+      <text class="section-sub">慢慢看，不着急</text>
+    </view>
+
+    <view class="topic-list">
+      <view class="topic-item" wx:for="{{topics}}" wx:key="id" data-index="{{index}}" bindtap="openTopic">
+        <text class="topic-icon">{{item.icon}}</text>
+        <view class="topic-body">
+          <text class="topic-title">{{item.title}}</text>
+          <text class="topic-desc">{{item.desc}}</text>
+        </view>
+        <text class="topic-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="talk-card" bindtap="talkToUs">
+      <view class="talk-body">
+        <text class="talk-title">想找人说说话？</text>
+        <text class="talk-desc">留下您想说的，我们会回电陪您聊聊</text>
+      </view>
+      <text class="talk-emoji">💬</text>
+    </view>
+
+  </view>
+
+</view>

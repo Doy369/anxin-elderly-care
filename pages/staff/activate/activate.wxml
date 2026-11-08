@@ -1,0 +1,31 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="pad">
+    <view class="intro">
+      <text class="intro-title">师傅认证</text>
+      <text class="intro-desc">激活码由管理员发放。认证通过后，你能在工单池看到待接的订单。</text>
+    </view>
+
+    <view class="card">
+      <view class="form-item">
+        <text class="form-label">激活码<text class="required">*</text></text>
+        <input class="input" placeholder="管理员发给你的 8 位码" maxlength="20" value="{{form.code}}" data-field="code" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">真实姓名<text class="required">*</text></text>
+        <input class="input" placeholder="用于服务记录署名" maxlength="10" value="{{form.name}}" data-field="name" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">手机号<text class="required">*</text></text>
+        <input class="input" type="number" maxlength="11" placeholder="客户联系用" value="{{form.phone}}" data-field="phone" bindinput="onInput" />
+      </view>
+    </view>
+
+    <button class="btn btn-primary btn-block btn-lg" bindtap="submit" loading="{{submitting}}">提交认证</button>
+
+    <text class="tip">姓名和手机号会展示在下单用户的订单详情里，请填真实信息。</text>
+  </view>
+
+</view>

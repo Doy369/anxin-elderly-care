@@ -7,8 +7,8 @@
  * 填了环境 ID 就自动走云端，没填就自动走本地，不需要改任何页面代码。
  */
 
-// 例如 'anxin-prod-8gk2xxxxxx'
-const CLOUD_ENV = ''
+// 例如 'cloud1-d5gl1cb3tac0ac224'
+const CLOUD_ENV = 'cloud1-d5gl1cb3tac0ac224'
 
 module.exports = {
   cloudEnv: CLOUD_ENV,
@@ -20,7 +20,7 @@ module.exports = {
    * 演示模式：机构端上线前，允许从订单详情手动推进状态，用来跑通全链路。
    * 正式上线前改为 false，届时状态只能由机构端/后台变更。
    */
-  demoMode: true,
+  demoMode: false,
   // 订单状态机：允许的状态与流转（与服务端保持一致，仅用于前端按钮显隐）
   ORDER_STATUS: {
     PENDING: '待接单',

@@ -62,11 +62,16 @@
       </view>
       <view class="info-row">
         <text class="info-label">订单金额</text>
-        <text class="info-value amount">¥{{order.amount}}（{{order.quantity}}{{order.unit}}）</text>
+        <text class="info-value amount" wx:if="{{order.amount > 0}}">¥{{order.amount}}（{{order.quantity}}{{order.unit}}）</text>
+        <text class="info-value" wx:else>{{feeText}}</text>
       </view>
       <view class="info-row">
         <text class="info-label">订单编号</text>
         <text class="info-value muted">{{order.id}}</text>
+      </view>
+      <view class="info-row" wx:if="{{order.rating}}">
+        <text class="info-label">我的评价</text>
+        <text class="info-value">{{order.rating}} 星{{order.comment ? ' · ' + order.comment : ''}}</text>
       </view>
       <view class="info-row" wx:if="{{order.familyPhone}}">
         <text class="info-label">通知家属</text>
@@ -90,6 +95,32 @@
       <button class="btn btn-ghost btn-block rec-demo-btn" bindtap="addDemoRecord" wx:if="{{order.status !== '待接单' && order.status !== '已取消'}}">
         添加一条服务记录（演示）
       </button>
+    </view>
+
+    <!-- 评价 -->
+    <view class="card rate-card" wx:if="{{canRate}}">
+      <view class="card-title">这次服务怎么样？</view>
+      <text class="rate-tip">您的评价会帮到其他老人挑服务</text>
+
+      <view class="stars">
+        <text
+          class="star {{rating >= item ? 'on' : ''}}"
+          wx:for="{{stars}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="setRating"
+        >★</text>
+      </view>
+
+      <textarea
+        class="textarea rate-input"
+        maxlength="200"
+        placeholder="说说哪里好，哪里还能改进（选填）"
+        value="{{comment}}"
+        bindinput="onComment"
+      />
+
+      <button class="btn btn-primary btn-block" bindtap="submitRate" loading="{{submittingRate}}">提交评价</button>
     </view>
 
     <!-- 演示：机构端上线前手动推进状态 -->

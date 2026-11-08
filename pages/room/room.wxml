@@ -1,0 +1,61 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <!-- 实拍图区 -->
+  <view class="hero-wrap">
+    <view class="hero empty" wx:if="{{!photo}}" bindtap="choosePhoto">
+      <view class="cam">📷</view>
+      <text class="t1">还没有{{room.name}}的照片</text>
+      <text class="t2">上传一张实拍，师傅和设计师看得更准，报价也更准</text>
+      <view class="upload-btn">上传实拍图</view>
+    </view>
+
+    <view class="hero" wx:else>
+      <image class="photo" src="{{photo.fileID}}" mode="aspectFill" bindtap="previewPhoto" />
+      <view class="badge-change" catchtap="choosePhoto">更换</view>
+      <view class="badge-date">您家的{{room.name}} · {{photo.dateText}}</view>
+      <view class="badge-del" catchtap="removePhoto">删除</view>
+    </view>
+  </view>
+
+  <view class="pad">
+
+    <!-- 隐患清单 -->
+    <view class="card">
+      <view class="card-head">
+        <text class="card-title">{{room.name}}常见隐患</text>
+        <text class="card-note">已检查 {{checkedCount}} / {{items.length}}</text>
+      </view>
+      <view class="item" wx:for="{{items}}" wx:key="text" data-index="{{index}}" bindtap="toggleItem">
+        <view class="dot {{item.checked ? 'on' : ''}}"></view>
+        <text class="item-text {{item.checked ? 'done' : ''}}">{{item.text}}</text>
+      </view>
+    </view>
+
+    <!-- 设计服务 -->
+    <view class="card design">
+      <view class="design-top">
+        <view class="design-icon">🎨</view>
+        <text class="design-name">设计服务</text>
+        <text class="design-price">¥199 抵改造款</text>
+      </view>
+      <text class="design-desc">设计师上门量房，出 3D 效果图与改造方案，改完不满意可免费调整一次。</text>
+      <view class="design-points">
+        <text class="dp">上门量房</text>
+        <text class="dp">3D 效果图</text>
+        <text class="dp">施工报价单</text>
+      </view>
+      <button class="design-btn" bindtap="goDesign">预约设计师上门</button>
+    </view>
+
+    <view class="tip">
+      <text class="tip-text">不确定要改哪里？先约设计服务，设计师会逐项告诉您哪些必须改、哪些可以缓一缓。</text>
+    </view>
+
+  </view>
+
+  <view class="footer">
+    <button class="btn btn-ghost foot-left" bindtap="choosePhoto">{{photo ? '更换照片' : '上传实拍图'}}</button>
+    <button class="btn btn-primary foot-right" bindtap="goBooking">预约改造</button>
+  </view>
+
+</view>

@@ -1,0 +1,162 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}" wx:if="{{order}}">
+
+  <!-- 状态头 -->
+  <view class="hero">
+    <view class="hero-emoji">{{order.icon}}</view>
+    <view class="hero-body">
+      <text class="hero-name">{{order.serviceName}}</text>
+      <text class="hero-no">单号 {{order.orderNo || order.id}}</text>
+    </view>
+    <text class="hero-status">{{order.status}}</text>
+  </view>
+
+  <view class="pad">
+
+    <!-- 上门信息 -->
+    <view class="card">
+      <text class="card-title">上门信息</text>
+
+      <view class="info-row">
+        <text class="info-label">时间</text>
+        <text class="info-value">{{order.date}} {{order.timeSlot}}</text>
+      </view>
+
+      <view class="info-row" bindtap="openMap">
+        <text class="info-label">地址</text>
+        <text class="info-value link">{{order.address}}</text>
+      </view>
+
+      <view class="info-row" bindtap="callCustomer">
+        <text class="info-label">联系人</text>
+        <text class="info-value link">{{order.contactName}} {{order.phone}}</text>
+      </view>
+
+      <view class="info-row" wx:if="{{roomLabel}}">
+        <text class="info-label">房间</text>
+        <text class="info-value">{{roomLabel}}</text>
+      </view>
+
+      <view class="info-row" wx:if="{{order.remark}}">
+        <text class="info-label">备注</text>
+        <text class="info-value">{{order.remark}}</text>
+      </view>
+
+      <view class="info-row" wx:if="{{order.amount > 0}}">
+        <text class="info-label">金额</text>
+        <text class="info-value amount">¥{{order.amount}}</text>
+      </view>
+      <view class="info-row" wx:else>
+        <text class="info-label">金额</text>
+        <text class="info-value">上门评估后报价</text>
+      </view>
+    </view>
+
+    <!-- 房屋现场 -->
+    <view class="card" wx:if="{{homePhotosLoaded}}">
+      <view class="card-head">
+        <text class="card-title">房屋现场</text>
+        <text class="card-note" wx:if="{{homePhotos.length > 0}}">业主上传 {{homePhotos.length}} 间</text>
+      </view>
+
+      <view class="photo-grid" wx:if="{{homePhotos.length > 0}}">
+        <view class="hp-item" wx:for="{{homePhotos}}" wx:key="roomType">
+          <image class="hp-photo" src="{{item.fileID}}" mode="aspectFill" data-src="{{item.fileID}}" bindtap="previewPhoto" />
+          <text class="hp-label">{{item.roomName}}</text>
+          <text class="hp-checked" wx:if="{{item.checked > 0}}">已查{{item.checked}}</text>
+        </view>
+      </view>
+
+      <text class="rec-empty-text" wx:else>业主还没上传实景照片。可以先电话沟通确认现场情况，到场后拍照记录。</text>
+    </view>
+
+    <!-- 凭证 -->
+    <view class="card" wx:if="{{order.media.length > 0}}">
+      <text class="card-title">现场凭证</text>
+      <view class="photo-grid">
+        <image
+          class="photo"
+          wx:for="{{order.media}}"
+          wx:key="*this"
+          src="{{item}}"
+          mode="aspectFill"
+          data-src="{{item}}"
+          bindtap="previewPhoto"
+        />
+      </view>
+    </view>
+
+    <!-- 服务记录 -->
+    <view class="card">
+      <text class="card-title">服务记录</text>
+      <view class="rec-empty" wx:if="{{!order.records || order.records.length === 0}}">
+        <text class="rec-empty-text">还没有记录。完成服务时填写的说明会出现在这里，业主也能看到。</text>
+      </view>
+      <view class="rec-item" wx:for="{{order.records}}" wx:key="id">
+        <view class="rec-head">
+          <text class="rec-time">{{item.time}}</text>
+          <text class="rec-who">{{item.worker}}</text>
+        </view>
+        <text class="rec-content">{{item.content}}</text>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="footer">
+    <button class="btn btn-primary btn-block" wx:if="{{order.status === '待接单' && !order.staffId}}" bindtap="acceptOrder">接这一单</button>
+
+    <button class="btn btn-primary btn-block" wx:elif="{{order.status === '已接单' && isMine}}" bindtap="arrive">我到了 · 开始服务</button>
+
+    <button class="btn btn-primary btn-block" wx:elif="{{order.status === '服务中' && isMine}}" bindtap="openFinish">完成服务</button>
+
+    <view class="done-tip" wx:else>
+      <text class="done-text">{{order.status === '待接单' ? '这单已被其他师傅接走' : '当前状态无需操作'}}</text>
+    </view>
+  </view>
+
+  <!-- 完成弹层 -->
+  <view class="mask" wx:if="{{showFinish}}" bindtap="closeFinish">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">完成服务</text>
+        <text class="sheet-close" bindtap="closeFinish">✕</text>
+      </view>
+
+      <scroll-view class="sheet-body" scroll-y="true">
+        <view class="form-item">
+          <text class="form-label">服务情况<text class="required">*</text></text>
+          <textarea
+            class="textarea"
+            maxlength="120"
+            placeholder="如：已安装浴室扶手两根，测试承重正常，老人试用后确认无晃动"
+            placeholder-class="ph-text"
+            value="{{note}}"
+            bindinput="onNote"
+          />
+          <text class="counter">{{note.length}}/120</text>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">现场照片<text class="required">*</text></text>
+          <text class="form-hint">最多 3 张，业主和客服会看到</text>
+          <view class="photo-grid">
+            <view class="photo-box" wx:for="{{photos}}" wx:key="*this">
+              <image class="photo" src="{{item}}" mode="aspectFill" data-src="{{item}}" bindtap="previewPhoto" />
+              <text class="photo-del" data-index="{{index}}" catchtap="removePhoto">✕</text>
+            </view>
+            <view class="photo-add" wx:if="{{photos.length < 3}}" bindtap="choosePhotos">
+              <text class="photo-add-icon">＋</text>
+              <text class="photo-add-text">拍照</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="sheet-foot">
+        <button class="btn btn-primary btn-block save-btn" bindtap="submitFinish" loading="{{submitting}}">提交并完成</button>
+      </view>
+    </view>
+  </view>
+
+</view>

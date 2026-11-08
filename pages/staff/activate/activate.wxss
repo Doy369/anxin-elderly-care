@@ -1,0 +1,46 @@
+/* 师傅认证 */
+.page {
+  padding-top: 32rpx;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+}
+
+.intro-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #1F2D22;
+}
+
+.intro-desc {
+  font-size: 27rpx;
+  color: #5F7165;
+  margin-top: 12rpx;
+  line-height: 1.6;
+}
+
+.tip {
+  display: block;
+  font-size: 23rpx;
+  color: #5F7165;
+  margin-top: 24rpx;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ===== 超大字体（适老化）覆盖样式 ===== */
+.bigfont .intro-title {
+  font-size: 54rpx;
+  font-weight: 700;
+  color: #1F2D22;
+}
+
+.bigfont .intro-desc {
+  font-size: 33rpx;
+  color: #5F7165;
+  margin-top: 14rpx;
+  line-height: 1.6;
+}

@@ -1,89 +1,97 @@
 <view class="page {{bigFont ? 'bigfont' : ''}}">
 
-  <view class="profile-hero">
-    <view class="ph-avatar">{{avatarText}}</view>
-    <text class="ph-name">王秀兰</text>
-    <text class="ph-sub">已认证老人用户 · 子女可代下单</text>
+  <view class="head-card" bindtap="editProfile">
+    <view class="avatar">
+      <text class="avatar-emoji">{{avatarEmoji}}</text>
+    </view>
+    <view class="head-body">
+      <text class="head-name">{{name}}</text>
+      <text class="head-meta">{{meta}}</text>
+    </view>
+    <text class="head-arrow">›</text>
   </view>
 
   <view class="pad">
-
-    <!-- 统计 -->
-    <view class="stat-row">
-      <view class="stat-item">
-        <text class="stat-num">{{stats.total}}</text>
-        <text class="stat-label">累计订单</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-num">{{stats.ongoing}}</text>
-        <text class="stat-label">进行中</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-num">{{stats.family}}</text>
-        <text class="stat-label">家人档案</text>
-      </view>
-    </view>
-
-    <!-- 使用模式 -->
-    <view class="card">
-      <view class="card-title">使用模式</view>
-      <view class="mode-row">
-        <view class="mode-item {{mode === 'elder' ? 'active' : ''}}" data-mode="elder" bindtap="switchMode">
-          <text class="mode-icon">👴</text>
-          <text class="mode-name">我自己用</text>
-          <text class="mode-desc">界面大、操作简单</text>
+    <view class="group">
+      <view class="row-item" bindtap="goFamily">
+        <text class="row-icon">👨‍👩‍👧</text>
+        <view class="row-body">
+          <text class="row-name">家人绑定</text>
+          <text class="row-desc">让爱常伴左右</text>
         </view>
-        <view class="mode-item {{mode === 'family' ? 'active' : ''}}" data-mode="family" bindtap="switchMode">
-          <text class="mode-icon">👨‍👩‍👧</text>
-          <text class="mode-name">帮家人下单</text>
-          <text class="mode-desc">代付、查进度、看记录</text>
+        <text class="row-arrow">›</text>
+      </view>
+
+      <view class="row-item" bindtap="goMyHome">
+        <text class="row-icon">🏠</text>
+        <view class="row-body">
+          <text class="row-name">我的房屋</text>
+          <text class="row-desc">房屋信息与评估记录</text>
         </view>
+        <text class="row-arrow">›</text>
+      </view>
+
+      <view class="row-item" bindtap="goOrders">
+        <text class="row-icon">📋</text>
+        <view class="row-body">
+          <text class="row-name">我的订单</text>
+          <text class="row-desc">服务订单与进度</text>
+        </view>
+        <text class="row-arrow">›</text>
+      </view>
+
+      <view class="row-item" bindtap="goFavorites">
+        <text class="row-icon">⭐</text>
+        <view class="row-body">
+          <text class="row-name">我的收藏</text>
+          <text class="row-desc">我喜欢的服务与内容</text>
+        </view>
+        <text class="row-arrow">›</text>
       </view>
     </view>
 
-    <!-- 功能入口 -->
-    <view class="card menu-card">
-      <view class="menu-row" bindtap="goFamily">
-        <text class="menu-icon">👨‍👩‍👧</text>
-        <text class="menu-name">家人档案</text>
-        <text class="menu-extra" wx:if="{{stats.family > 0}}">{{stats.family}} 位</text>
-        <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-row" bindtap="goOrders">
-        <text class="menu-icon">📋</text>
-        <text class="menu-name">我的订单</text>
-        <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-row" bindtap="goServices">
-        <text class="menu-icon">🔧</text>
-        <text class="menu-name">适老化改造项目</text>
-        <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-row" bindtap="callService">
-        <text class="menu-icon">📞</text>
-        <text class="menu-name">客服热线</text>
-        <text class="menu-extra">400-800-1234</text>
-        <text class="menu-arrow">›</text>
-      </view>
-    </view>
-
-    <!-- 设置 -->
-    <view class="card menu-card">
-      <view class="menu-row" bindtap="toggleBigFont">
-        <text class="menu-icon">🔠</text>
-        <text class="menu-name">超大字体</text>
+    <view class="group">
+      <view class="row-item">
+        <text class="row-icon">⚙️</text>
+        <view class="row-body">
+          <text class="row-name">适老化设置</text>
+          <text class="row-desc">大字体 · 语音助手 · 简洁模式</text>
+        </view>
         <view class="switch {{bigFont ? 'on' : ''}}" catchtap="toggleBigFont">
           <view class="switch-dot"></view>
         </view>
       </view>
-      <view class="menu-row" bindtap="showAbout">
-        <text class="menu-icon">ℹ️</text>
-        <text class="menu-name">关于安心养老</text>
-        <text class="menu-arrow">›</text>
+
+      <view class="row-item" bindtap="callService">
+        <text class="row-icon">📞</text>
+        <view class="row-body">
+          <text class="row-name">联系客服</text>
+          <text class="row-desc">400-800-1234 · 8:00-20:00</text>
+        </view>
+        <text class="row-arrow">›</text>
       </view>
     </view>
 
-    <view class="version">安心养老 · 版本 1.0.0</view>
+    <view class="group">
+      <view class="row-item" bindtap="goStaff">
+        <text class="row-icon">🛠️</text>
+        <view class="row-body">
+          <text class="row-name">服务人员入口</text>
+          <text class="row-desc">师傅接单、打卡、上传服务记录</text>
+        </view>
+        <text class="row-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="promo">
+      <view class="promo-body">
+        <text class="promo-title">让家更适老</text>
+        <text class="promo-sub">让生活更美好</text>
+      </view>
+      <text class="promo-emoji">🏡</text>
+    </view>
+
+    <text class="version">安心养老 · v1.0.0</text>
   </view>
 
 </view>

@@ -1,0 +1,73 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="hero pad">
+    <text class="hi">{{greeting}}，{{name}}</text>
+    <text class="hi-sub">{{todayText}} · 今天也要好好照顾自己</text>
+  </view>
+
+  <view class="pad">
+
+    <view class="action-card" bindtap="goHelp">
+      <view class="ac-body">
+        <text class="ac-title">需要帮忙？</text>
+        <text class="ac-sub">陪诊 · 护工 · 做饭 · 保洁</text>
+        <view class="ac-btn">一键找服务</view>
+      </view>
+      <text class="ac-emoji">🤝</text>
+    </view>
+
+    <view class="quick">
+      <view class="quick-item" bindtap="goMyHome">
+        <text class="quick-emoji">🏡</text>
+        <text class="quick-name">我的家</text>
+        <text class="quick-desc">看看哪里要改</text>
+      </view>
+      <view class="quick-item" bindtap="goOrders">
+        <text class="quick-emoji">📋</text>
+        <text class="quick-name">我的订单</text>
+        <text class="quick-desc">服务到哪一步</text>
+      </view>
+      <view class="quick-item" bindtap="callService">
+        <text class="quick-emoji">📞</text>
+        <text class="quick-name">打电话</text>
+        <text class="quick-desc">随时找我们</text>
+      </view>
+    </view>
+
+    <block wx:if="{{activeOrder}}">
+      <view class="section-head">
+        <text class="section-title">进行中的服务</text>
+        <text class="section-sub" bindtap="goOrders">全部 ›</text>
+      </view>
+      <view class="order-card" bindtap="goOrderDetail" data-id="{{activeOrder.id}}">
+        <view class="oc-top">
+          <text class="oc-emoji">{{activeOrder.icon}}</text>
+          <view class="oc-body">
+            <text class="oc-name">{{activeOrder.serviceName}}</text>
+            <text class="oc-time">{{activeOrder.date}} {{activeOrder.timeSlot}}</text>
+          </view>
+          <text class="oc-status">{{activeOrder.status}}</text>
+        </view>
+        <view class="oc-foot">
+          <text class="oc-addr">{{activeOrder.address}}</text>
+          <text class="oc-more">详情 ›</text>
+        </view>
+      </view>
+    </block>
+
+    <view class="section-head" wx:if="{{!activeOrder}}">
+      <text class="section-title">家里的安全</text>
+      <text class="section-sub" bindtap="goMyHome">去检查 ›</text>
+    </view>
+
+    <view class="tip-card" wx:if="{{!activeOrder}}">
+      <text class="tip-emoji">🛁</text>
+      <view class="tip-body">
+        <text class="tip-title">浴室是老人最容易滑倒的地方</text>
+        <text class="tip-desc">加一根扶手、铺一块防滑垫，能挡掉大半风险</text>
+      </view>
+    </view>
+
+  </view>
+
+</view>

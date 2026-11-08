@@ -77,8 +77,11 @@
           <textarea class="textarea" placeholder="如：糖尿病需控糖、行动不便需搀扶、对海鲜过敏、听力下降需大声沟通" value="{{form.note}}" data-field="note" bindinput="onInput" />
         </view>
 
-        <button class="btn btn-primary btn-block save-btn" bindtap="save">保存</button>
       </scroll-view>
+
+      <view class="sheet-foot">
+        <button class="btn btn-primary btn-block save-btn" bindtap="save" loading="{{saving}}">保存</button>
+      </view>
     </view>
   </view>
 

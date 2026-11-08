@@ -1,160 +1,163 @@
 <view class="page {{bigFont ? 'bigfont' : ''}}">
 
-  <!-- 服务概要 -->
-  <view class="svc-summary">
-    <text class="ss-icon">{{service.icon}}</text>
-    <view class="ss-body">
-      <text class="ss-name">{{service.name}}</text>
-      <text class="ss-provider">{{service.provider}}</text>
-      <view class="ss-meta">
-        <text class="ss-meta-item">⭐ {{service.rating}}</text>
-        <text class="ss-meta-item">{{service.duration}}</text>
-        <text class="ss-meta-item">{{service.orderCountText}} 单</text>
+  <!-- 步骤条 -->
+  <view class="stepper pad">
+    <block wx:for="{{steps}}" wx:key="index">
+      <view class="step">
+        <view class="dot {{step >= index + 1 ? 'on' : ''}}">{{index + 1}}</view>
+        <text class="step-label {{step >= index + 1 ? 'on' : ''}}">{{item}}</text>
       </view>
-    </view>
-    <view class="ss-price">
-      <text class="price"><text class="price-symbol">¥</text><text class="price-num">{{service.price}}</text></text>
-      <text class="price-unit">{{service.priceUnit}}{{service.unit}}</text>
-    </view>
+      <view class="line {{step > index + 1 ? 'on' : ''}}" wx:if="{{index < 2}}"></view>
+    </block>
   </view>
 
   <view class="pad">
 
-    <!-- 服务内容 -->
-    <view class="card">
-      <view class="card-title">服务包含</view>
-      <view class="inc-row" wx:for="{{service.includes}}" wx:key="*this">
-        <text class="inc-dot">✓</text>
-        <text class="inc-text">{{item}}</text>
-      </view>
+    <view class="room-tip" wx:if="{{roomName}}">
+      <text class="room-tip-icon">🏠</text>
+      <text class="room-tip-text">本次改造房间：{{roomName}}</text>
     </view>
 
-    <!-- 服务流程 -->
-    <view class="card">
-      <view class="card-title">服务流程</view>
-      <view class="step-row" wx:for="{{service.process}}" wx:key="*this">
-        <view class="step-no">{{index + 1}}</view>
-        <text class="step-text">{{item}}</text>
-      </view>
-    </view>
-
-    <view class="detail-anchor" id="detail"></view>
-
-    <!-- 预约表单 -->
-    <view class="card form-card">
-      <view class="card-title">填写预约信息</view>
-
-      <!-- 服务对象 -->
-      <view class="form-item">
-        <text class="form-label">服务对象<text class="required">*</text></text>
-        <view class="mode-hint" wx:if="{{mode === 'family'}}">
-          <text class="mode-hint-text">当前为「帮家人下单」模式，服务记录会同步给家人</text>
-        </view>
-        <view class="who-row">
-          <view class="who-chip {{form.forWhom === '本人' ? 'active' : ''}}" data-name="本人" bindtap="pickWho">
-            <text class="who-text">{{mode === 'family' ? '我本人' : '我自己'}}</text>
-          </view>
-          <view class="who-chip" wx:for="{{members}}" wx:key="id" data-name="{{item.name}}" data-id="{{item.id}}" bindtap="pickWho">
-            <text class="who-text">{{item.relation}}·{{item.name}}</text>
-          </view>
-          <view class="who-chip add" bindtap="goFamily">
-            <text class="who-add">+ 添加家人</text>
-          </view>
+    <!-- 第 1 步：选择项目 -->
+    <block wx:if="{{step === 1}}">
+      <view class="block">
+        <text class="block-title">{{service.primaryLabel}}</text>
+        <view
+          class="pick-row {{form.primaryIndex === index ? 'on' : ''}}"
+          wx:for="{{service.primaryOptions}}"
+          wx:key="*this"
+          data-index="{{index}}"
+          bindtap="pickPrimary"
+        >
+          <text class="pick-icon">{{service.icon}}</text>
+          <text class="pick-text">{{item}}</text>
+          <text class="pick-check" wx:if="{{form.primaryIndex === index}}">✓</text>
         </view>
       </view>
+    </block>
 
-      <!-- 联系人 -->
-      <view class="form-item">
-        <text class="form-label">联系人姓名<text class="required">*</text></text>
-        <input class="input" placeholder="请输入姓名" value="{{form.contactName}}" data-field="contactName" bindinput="onInput" />
-      </view>
+    <!-- 第 2 步：预约信息 -->
+    <block wx:if="{{step === 2}}">
+      <view class="block">
+        <text class="block-title">上门 / 服务时间</text>
 
-      <view class="form-item">
-        <text class="form-label">联系电话<text class="required">*</text></text>
-        <input class="input" type="number" maxlength="11" placeholder="请输入11位手机号" value="{{form.phone}}" data-field="phone" bindinput="onInput" />
-      </view>
+        <picker mode="date" value="{{form.date}}" start="{{today}}" bindchange="onDate">
+          <view class="field">
+            <text class="field-icon">📅</text>
+            <text class="field-label">{{dateLabel}}</text>
+            <text class="field-value {{form.date ? '' : 'ph'}}">{{form.date || '请选择日期'}}</text>
+            <text class="field-arrow">›</text>
+          </view>
+        </picker>
 
-      <!-- 上门地址 -->
-      <view class="form-item">
-        <text class="form-label">上门地址<text class="required">*</text></text>
-        <view class="addr-box">
-          <input class="input" placeholder="请填写详细地址，如 XX小区3栋201" value="{{form.address}}" data-field="address" bindinput="onInput" />
-          <button class="btn btn-ghost btn-sm addr-locate" bindtap="useCurrentLocation">📍 当前定位</button>
-        </view>
-        <text class="field-tip" wx:if="{{locating}}">正在获取位置…</text>
-        <text class="field-tip" wx:if="{{form.address}}">{{form.address}}</text>
-      </view>
-
-      <!-- 上门时间 -->
-      <view class="form-item">
-        <text class="form-label">上门日期<text class="required">*</text></text>
-        <picker mode="date" value="{{form.date}}" start="{{today}}" bindchange="onDateChange">
-          <view class="picker-box {{form.date ? '' : 'placeholder'}}">
-            <text>{{form.date || '请选择日期'}}</text>
-            <text class="picker-arrow">›</text>
+        <picker mode="time" value="{{form.time}}" bindchange="onTime">
+          <view class="field">
+            <text class="field-icon">🕘</text>
+            <text class="field-label">服务时间</text>
+            <text class="field-value {{form.time ? '' : 'ph'}}">{{timeText || '请选择时间'}}</text>
+            <text class="field-arrow">›</text>
           </view>
         </picker>
       </view>
 
-      <view class="form-item">
-        <text class="form-label">上门时段<text class="required">*</text></text>
-        <view class="slot-grid">
-          <view class="slot-item {{form.timeSlot === item ? 'active' : ''}}" wx:for="{{timeSlots}}" wx:key="*this" data-slot="{{item}}" bindtap="pickSlot">
-            <text class="slot-text">{{item}}</text>
+      <view class="block" wx:if="{{service.companion}}">
+        <text class="block-title">选择陪诊人</text>
+        <view class="comp-row">
+          <view
+            class="comp-card {{form.companion === item.id ? 'on' : ''}}"
+            wx:for="{{companions}}"
+            wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="pickCompanion"
+          >
+            <view class="comp-top">
+              <text class="comp-emoji">{{item.id === 'pro' ? '👩‍⚕️' : '👨‍👩‍👧'}}</text>
+              <text class="comp-check" wx:if="{{form.companion === item.id}}">✓</text>
+            </view>
+            <text class="comp-name">{{item.name}}</text>
+            <text class="comp-desc">{{item.desc}}</text>
           </view>
         </view>
       </view>
 
-      <!-- 服务数量 -->
-      <view class="form-item">
-        <text class="form-label">{{quantityLabel}}</text>
-        <view class="qty-row">
-          <view class="qty-btn" bindtap="minusQty">−</view>
-          <text class="qty-num">{{form.quantity}}</text>
-          <view class="qty-btn" bindtap="plusQty">+</view>
-          <text class="qty-hint">{{quantityHint}}</text>
+      <view class="block">
+        <text class="block-title">联系信息</text>
+        <input class="input mb" placeholder="联系人姓名" value="{{form.contactName}}" data-field="contactName" bindinput="onInput" />
+        <input class="input mb" type="number" maxlength="11" placeholder="手机号" value="{{form.phone}}" data-field="phone" bindinput="onInput" />
+        <input class="input" placeholder="服务地址（详细到门牌号）" value="{{form.address}}" data-field="address" bindinput="onInput" />
+      </view>
+
+      <view class="block">
+        <view class="block-head">
+          <text class="block-title plain">备注（选填）</text>
+          <text class="counter">{{remarkLen}}/20</text>
+        </view>
+        <textarea
+          class="textarea"
+          maxlength="20"
+          placeholder="如：就诊科室、特殊需求等"
+          placeholder-class="ph-text"
+          value="{{form.remark}}"
+          data-field="remark"
+          bindinput="onInput"
+        />
+      </view>
+    </block>
+
+    <!-- 第 3 步：确认提交 -->
+    <block wx:if="{{step === 3}}">
+      <view class="block">
+        <text class="block-title">确认预约信息</text>
+
+        <view class="sum-row">
+          <text class="sum-label">服务项目</text>
+          <text class="sum-value">{{service.name}}</text>
+        </view>
+        <view class="sum-row" wx:if="{{roomName}}">
+          <text class="sum-label">改造房间</text>
+          <text class="sum-value">{{roomName}}</text>
+        </view>
+        <view class="sum-row">
+          <text class="sum-label">{{service.primaryLabel}}</text>
+          <text class="sum-value">{{form.primary || '未选择'}}</text>
+        </view>
+        <view class="sum-row">
+          <text class="sum-label">{{dateLabel}}</text>
+          <text class="sum-value">{{form.date}}</text>
+        </view>
+        <view class="sum-row">
+          <text class="sum-label">服务时间</text>
+          <text class="sum-value">{{timeText}}</text>
+        </view>
+        <view class="sum-row" wx:if="{{service.companion}}">
+          <text class="sum-label">陪诊人</text>
+          <text class="sum-value">{{companionName}}</text>
+        </view>
+        <view class="sum-row">
+          <text class="sum-label">联系人</text>
+          <text class="sum-value">{{form.contactName}} {{form.phone}}</text>
+        </view>
+        <view class="sum-row">
+          <text class="sum-label">地址</text>
+          <text class="sum-value">{{form.address}}</text>
+        </view>
+        <view class="sum-row" wx:if="{{form.remark}}">
+          <text class="sum-label">备注</text>
+          <text class="sum-value">{{form.remark}}</text>
         </view>
       </view>
 
-      <!-- 备注 -->
-      <view class="form-item">
-        <text class="form-label">补充说明</text>
-        <textarea class="textarea" placeholder="例如：家里有台阶需要搭梯子、老人对某些食物忌口、需要家属陪同等" value="{{form.remark}}" data-field="remark" bindinput="onInput" />
+      <view class="notice">
+        <text class="notice-text">提交后服务人员会在 30 分钟内电话确认，请保持手机畅通。</text>
       </view>
+    </block>
 
-      <!-- 联系人同步 -->
-      <view class="form-item">
-        <text class="form-label">服务情况通知给</text>
-        <view class="notify-tip">
-          <text class="notify-text">服务人员的联系电话与服务记录会通过这里预留的号码发送</text>
-        </view>
-        <input class="input" placeholder="选填：家属手机号" value="{{form.familyPhone}}" data-field="familyPhone" bindinput="onInput" />
-      </view>
-    </view>
-
-    <!-- 费用预估 -->
-    <view class="card">
-      <view class="card-title">费用预估</view>
-      <view class="fee-row">
-        <text class="fee-label">{{service.name}} × {{form.quantity}}</text>
-        <text class="fee-value">¥{{estimate}}</text>
-      </view>
-      <view class="fee-tip">实际费用以师傅上门测量后的最终报价为准，改造类项目会提前电话确认</view>
-    </view>
-
-    <view class="safe-tip">
-      <text class="safe-icon">🛡</text>
-      <text class="safe-text">平台全程保障 · 人员实名认证 · 不满意 24 小时内可退</text>
-    </view>
   </view>
 
-  <!-- 底部提交栏 -->
+  <!-- 底部按钮 -->
   <view class="footer">
-    <view class="footer-price">
-      <text class="fp-label">预估</text>
-      <text class="price"><text class="price-symbol">¥</text><text class="price-num">{{estimate}}</text></text>
-    </view>
-    <button class="btn btn-accent btn-lg footer-btn" bindtap="submit">立即预约</button>
+    <button class="btn btn-ghost footer-back" wx:if="{{step > 1}}" bindtap="prevStep">上一步</button>
+    <button class="btn btn-primary footer-next" bindtap="nextStep">{{step === 3 ? '提交预约' : '下一步'}}</button>
   </view>
 
 </view>

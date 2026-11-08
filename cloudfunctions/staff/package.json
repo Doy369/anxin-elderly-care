@@ -1,0 +1,9 @@
+{
+  "name": "staff",
+  "version": "1.0.0",
+  "description": "服务人员身份与激活",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

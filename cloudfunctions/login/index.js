@@ -9,7 +9,31 @@ const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
+/**
+ * 集合自动初始化
+ *
+ * 云函数首次冷启动时确保 5 个集合存在。已存在会抛错，忽略即可。
+ * 这样部署完就能直接用，不必先去控制台手点建集合。
+ * 索引仍需在控制台建（SDK 不支持建索引），但不影响功能，只影响查询速度。
+ */
+const COLLECTIONS = ['users', 'homes', 'home_access', 'elders', 'elder_bindings', 'orders', 'order_logs', 'room_assets', 'staff']
+let ensured = false
+
+async function ensureCollections() {
+  if (ensured) return
+  for (let i = 0; i < COLLECTIONS.length; i++) {
+    try {
+      await db.createCollection(COLLECTIONS[i])
+    } catch (e) {
+      // 集合已存在或并发创建，忽略
+    }
+  }
+  ensured = true
+}
+
 exports.main = async (event) => {
+  await ensureCollections()
+
   const wxContext = cloud.getWXContext()
   const openid = wxContext.OPENID
 

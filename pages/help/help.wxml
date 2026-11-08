@@ -1,0 +1,29 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="head pad">
+    <text class="head-title">您需要什么帮助？</text>
+    <text class="head-sub">一句话，我们来帮您</text>
+  </view>
+
+  <view class="pad">
+    <view class="help-grid">
+      <view class="help-card" wx:for="{{services}}" wx:key="id" data-id="{{item.id}}" bindtap="goService">
+        <view class="help-icon" style="background:{{item.tone}}">
+          <text class="help-emoji">{{item.icon}}</text>
+        </view>
+        <text class="help-name">{{item.name}}</text>
+        <text class="help-desc">{{item.desc}}</text>
+      </view>
+    </view>
+
+    <view class="cta" bindtap="callService">
+      <view class="cta-body">
+        <text class="cta-title">有需要？随时告诉我们</text>
+        <text class="cta-sub">让专业的人，做温暖的事</text>
+        <view class="cta-btn">立即拨打 400-800-1234</view>
+      </view>
+      <text class="cta-emoji">🌷</text>
+    </view>
+  </view>
+
+</view>

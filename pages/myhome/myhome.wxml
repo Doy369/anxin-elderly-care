@@ -1,0 +1,127 @@
+<view class="page {{bigFont ? 'bigfont' : ''}}">
+
+  <view class="head pad">
+    <view class="head-left">
+      <text class="head-title">我的家</text>
+      <text class="head-sub">用更安全的家，陪伴更长的时光</text>
+    </view>
+    <text class="head-tip">点击房间\n查看详情</text>
+  </view>
+
+  <view class="pad">
+
+    <!-- 当前房屋 -->
+    <view class="home-card" bindtap="openHomeSheet">
+      <view class="home-icon">🏠</view>
+      <view class="home-body">
+        <view class="home-name-row">
+          <text class="home-name">{{currentHome.name || '我的家'}}</text>
+          <text class="home-switch">切换 ▾</text>
+        </view>
+        <text class="home-addr">{{currentHome.address || '还没填地址，点这里补充'}}</text>
+      </view>
+    </view>
+
+    <!-- 房间宫格 -->
+    <view class="room-grid">
+      <view class="room-card" wx:for="{{rooms}}" wx:key="id" data-id="{{item.id}}" bindtap="openRoom">
+        <view class="room-photo" style="background:{{item.tone}}">
+          <image class="room-img" wx:if="{{item.photo}}" src="{{item.photo}}" mode="aspectFill" />
+          <text class="room-emoji" wx:else>{{item.icon}}</text>
+          <view class="room-badge" wx:if="{{!item.photo}}">待上传</view>
+          <view class="room-checked" wx:if="{{item.checkedCount > 0}}">已查 {{item.checkedCount}}</view>
+        </view>
+        <view class="room-info">
+          <text class="room-name">{{item.name}}</text>
+          <text class="room-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="tip-card">
+      <text class="tip-icon">💡</text>
+      <view class="tip-body">
+        <text class="tip-title">先拍几张照片</text>
+        <text class="tip-desc">点进每个房间上传实拍图，师傅和设计师能看得更准，报价也更准</text>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 房屋切换 -->
+  <view class="mask" wx:if="{{showHomeSheet}}" bindtap="closeHomeSheet">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">我的房屋</text>
+        <text class="sheet-close" bindtap="closeHomeSheet">✕</text>
+      </view>
+
+      <view class="home-item" wx:for="{{homes}}" wx:key="id" data-id="{{item.id}}" bindtap="switchHome">
+        <view class="hi-body">
+          <view class="hi-name-row">
+            <text class="hi-name">{{item.name}}</text>
+            <text class="hi-current" wx:if="{{item.id === currentHomeId}}">当前</text>
+          </view>
+          <text class="hi-addr">{{item.address || '未填地址'}}</text>
+        </view>
+        <text class="hi-edit" data-id="{{item.id}}" catchtap="editHome">编辑</text>
+        <text class="hi-del" data-id="{{item.id}}" catchtap="removeHome">删除</text>
+      </view>
+
+      <button class="btn btn-primary btn-block add-home-btn" bindtap="addHome">+ 添加房屋</button>
+    </view>
+  </view>
+
+  <!-- 房屋表单 -->
+  <view class="mask" wx:if="{{showForm}}" bindtap="closeForm">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{editingId ? '编辑房屋' : '添加房屋'}}</text>
+        <text class="sheet-close" bindtap="closeForm">✕</text>
+      </view>
+
+      <scroll-view class="form-body" scroll-y="true">
+        <view class="form-item">
+          <text class="form-label">房屋名称<text class="required">*</text></text>
+          <input class="input" placeholder="如：自己家、爸妈家" maxlength="20" value="{{form.name}}" data-field="name" bindinput="onInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">详细地址</text>
+          <input class="input" placeholder="街道、小区、楼栋门牌" maxlength="100" value="{{form.address}}" data-field="address" bindinput="onInput" />
+        </view>
+
+        <view class="form-row">
+          <view class="form-item half">
+            <text class="form-label">面积（㎡）</text>
+            <input class="input" type="number" placeholder="如 89" value="{{form.area}}" data-field="area" bindinput="onInput" />
+          </view>
+          <view class="form-item half">
+            <text class="form-label">楼层</text>
+            <input class="input" type="number" placeholder="如 3" value="{{form.floor}}" data-field="floor" bindinput="onInput" />
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">有无电梯</text>
+          <view class="switch-row" bindtap="toggleElevator">
+            <text class="switch-text">{{form.elevator ? '有电梯' : '无电梯'}}</text>
+            <view class="switch {{form.elevator ? 'on' : ''}}">
+              <view class="switch-dot"></view>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">备注</text>
+          <input class="input" placeholder="如：老房子、卫生间偏小" maxlength="50" value="{{form.remark}}" data-field="remark" bindinput="onInput" />
+        </view>
+      </scroll-view>
+
+      <view class="sheet-foot">
+        <button class="btn btn-primary btn-block save-btn" bindtap="saveHome" loading="{{saving}}">保存</button>
+      </view>
+    </view>
+  </view>
+
+</view>

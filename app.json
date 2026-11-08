@@ -1,37 +1,48 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/services/services",
+    "pages/home/home",
+    "pages/myhome/myhome",
+    "pages/help/help",
+    "pages/heart/heart",
+    "pages/profile/profile",
+    "pages/room/room",
     "pages/booking/booking",
+    "pages/staff/home",
+    "pages/staff/detail/detail",
+    "pages/staff/activate/activate",
     "pages/orders/orders",
     "pages/order-detail/order-detail",
-    "pages/family/family",
-    "pages/profile/profile"
+    "pages/family/family"
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#15803D",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "安心养老",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#FFFFFF"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F4F8F2"
   },
   "tabBar": {
-    "color": "#7A8B85",
-    "selectedColor": "#15803D",
+    "custom": true,
+    "color": "#5F7165",
+    "selectedColor": "#2E7D32",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/home/home",
         "text": "首页"
       },
       {
-        "pagePath": "pages/services/services",
-        "text": "找服务"
+        "pagePath": "pages/myhome/myhome",
+        "text": "我的家"
       },
       {
-        "pagePath": "pages/orders/orders",
-        "text": "我的订单"
+        "pagePath": "pages/help/help",
+        "text": "帮我一下"
+      },
+      {
+        "pagePath": "pages/heart/heart",
+        "text": "心语"
       },
       {
         "pagePath": "pages/profile/profile",

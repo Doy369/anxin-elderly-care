@@ -171,9 +171,9 @@ Page({
   },
 
   quickBook(e) {
-    wx.switchTab({ url: '/pages/services/services' })
+    wx.switchTab({ url: '/pages/help/help' })
     wx.showToast({
-      title: '选择服务后可在服务对象中选择家人',
+      title: '选择服务后可在联系人里填家人信息',
       icon: 'none',
       duration: 2200
     })

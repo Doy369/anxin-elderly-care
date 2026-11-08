@@ -46,7 +46,14 @@ Page({
     timeline: [],
     canCancel: false,
     demoMode: cfg.demoMode,
-    canAdvance: false
+    canAdvance: false,
+    canRate: false,
+    stars: [1, 2, 3, 4, 5],
+    rating: 5,
+    comment: '',
+    submittingRate: false,
+    // 无固定价的服务（需上门评估）显示这句，避免出现「¥0」
+    feeText: '上门评估后报价'
   },
 
   onLoad(options) {
@@ -127,14 +134,18 @@ Page({
       }),
       statusDesc: STATUS_DESC[status] || '',
       timeline: timeline,
+      feeText: (Number(order.amount) || 0) > 0 ? '' : '上门评估后报价',
       canCancel: ['待接单', '已接单'].indexOf(status) > -1,
-      canAdvance: cfg.demoMode && !!NEXT[status]
+      canAdvance: cfg.demoMode && !!NEXT[status],
+      canRate: status === '待评价',
+      rating: order.rating || 5,
+      comment: order.comment || ''
     })
 
     wx.setNavigationBarTitle({ title: order.serviceName || '订单详情' })
   },
 
-  // 演示用：按主流程推进一格，正式版由机构端操作
+  // 演示用：按主流程推进一格（demoMode 关闭后入口不显示）
   advanceStatus() {
     const order = this.data.order
     if (!order) return
@@ -197,14 +208,58 @@ Page({
     })
   },
 
+  /* ---------- 评价 ---------- */
+  setRating(e) {
+    this.setData({ rating: Number(e.currentTarget.dataset.value) })
+  },
+
+  onComment(e) {
+    this.setData({ comment: e.detail.value })
+  },
+
+  submitRate() {
+    if (this.data.submittingRate) return
+    this.setData({ submittingRate: true })
+
+    store.rateOrder(this.orderId, this.data.rating, this.data.comment).then((res) => {
+      this.setData({ submittingRate: false })
+      if (res && res.ok === false) {
+        wx.showToast({ title: res.message || '提交失败', icon: 'none' })
+        return
+      }
+      wx.showToast({ title: '感谢您的评价', icon: 'success' })
+      this.load()
+    }).catch((err) => {
+      this.setData({ submittingRate: false })
+      wx.showToast({ title: err.message || '提交失败', icon: 'none' })
+    })
+  },
+
   contactWorker() {
+    const o = this.data.order || {}
+    if (!o.staffName) {
+      wx.showModal({
+        title: '还没有服务人员',
+        content: '接单后这里会显示师傅的姓名和电话。',
+        showCancel: false
+      })
+      return
+    }
+    if (!o.staffPhone) {
+      wx.showModal({
+        title: o.staffName,
+        content: '师傅还没留下联系电话，可以先联系客服转接。',
+        showCancel: false
+      })
+      return
+    }
     wx.showModal({
-      title: '联系服务人员',
-      content: '陈师傅\n138 0000 0000\n服务时间 8:00 - 20:00',
+      title: '联系' + o.staffName,
+      content: o.staffPhone,
       confirmText: '拨打',
       cancelText: '取消',
       success(res) {
-        if (res.confirm) wx.makePhoneCall({ phoneNumber: '13800000000' })
+        if (res.confirm) wx.makePhoneCall({ phoneNumber: o.staffPhone })
       }
     })
   }

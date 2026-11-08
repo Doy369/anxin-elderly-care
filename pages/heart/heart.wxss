@@ -1,0 +1,253 @@
+/* 心语 */
+.head {
+  padding-top: 32rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.head-title {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #1F2D22;
+  letter-spacing: 2rpx;
+}
+
+.head-sub {
+  font-size: 26rpx;
+  color: #5F7165;
+  margin-top: 12rpx;
+}
+
+/* 每日一句 */
+.quote-card {
+  background: linear-gradient(135deg, #3D9142 0%, #2E7D32 100%);
+  border-radius: 32rpx;
+  padding: 36rpx 32rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12rpx 30rpx rgba(67, 160, 71, 0.2);
+}
+
+.quote-mark {
+  font-size: 60rpx;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 0.8;
+  font-family: Georgia, serif;
+}
+
+.quote-text {
+  font-size: 36rpx;
+  color: #FFFFFF;
+  line-height: 1.7;
+  margin-top: 10rpx;
+  letter-spacing: 1rpx;
+}
+
+.quote-date {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 20rpx;
+  align-self: flex-end;
+}
+
+/* 心情记录 */
+.mood-card {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 30rpx 28rpx;
+  margin-top: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(58, 92, 64, 0.05);
+}
+
+.mood-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2D22;
+  margin-bottom: 22rpx;
+}
+
+.mood-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mood-item {
+  width: 23%;
+  background: #F6FAF5;
+  border: 2rpx solid transparent;
+  border-radius: 20rpx;
+  padding: 20rpx 0 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mood-item.on {
+  background: #EDF7EE;
+  border-color: #66BB6A;
+}
+
+.mood-emoji {
+  font-size: 48rpx;
+}
+
+.mood-name {
+  font-size: 23rpx;
+  color: #6B7B6E;
+  margin-top: 10rpx;
+}
+
+.mood-item.on .mood-name {
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+.mood-tip {
+  display: block;
+  font-size: 23rpx;
+  color: #4E7A54;
+  margin-top: 18rpx;
+}
+
+/* 话题列表 */
+.topic-list {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 0 28rpx;
+  box-shadow: 0 6rpx 20rpx rgba(58, 92, 64, 0.05);
+}
+
+.topic-item {
+  display: flex;
+  align-items: center;
+  height: 124rpx;
+  border-bottom: 2rpx solid #F1F6F1;
+}
+
+.topic-item:last-child {
+  border-bottom: none;
+}
+
+.topic-icon {
+  font-size: 42rpx;
+  margin-right: 20rpx;
+}
+
+.topic-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-title {
+  font-size: 30rpx;
+  color: #1F2D22;
+  font-weight: 500;
+}
+
+.topic-desc {
+  font-size: 23rpx;
+  color: #5F7165;
+  margin-top: 6rpx;
+}
+
+.topic-arrow {
+  font-size: 32rpx;
+  color: #7A8C7E;
+}
+
+/* 找人聊聊 */
+.talk-card {
+  margin-top: 24rpx;
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 30rpx 28rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6rpx 20rpx rgba(58, 92, 64, 0.05);
+}
+
+.talk-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.talk-title {
+  font-size: 31rpx;
+  font-weight: 600;
+  color: #1F2D22;
+}
+
+.talk-desc {
+  font-size: 24rpx;
+  color: #5F7165;
+  margin-top: 8rpx;
+  line-height: 1.5;
+}
+
+.talk-emoji {
+  font-size: 56rpx;
+}
+
+/* ===== 超大字体（适老化）覆盖样式 ===== */
+.bigfont .head-title {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #1F2D22;
+  letter-spacing: 2rpx;
+}
+
+.bigfont .head-sub {
+  font-size: 32rpx;
+  color: #5F7165;
+  margin-top: 14rpx;
+}
+
+.bigfont .quote-text {
+  font-size: 45rpx;
+  color: #FFFFFF;
+  line-height: 1.7;
+  margin-top: 12rpx;
+  letter-spacing: 1rpx;
+}
+
+.bigfont .mood-title {
+  font-size: 37rpx;
+  font-weight: 600;
+  color: #1F2D22;
+  margin-bottom: 25rpx;
+}
+
+.bigfont .mood-name {
+  font-size: 28rpx;
+  color: #6B7B6E;
+  margin-top: 11rpx;
+}
+
+.bigfont .topic-title {
+  font-size: 37rpx;
+  color: #1F2D22;
+  font-weight: 500;
+}
+
+.bigfont .topic-desc {
+  font-size: 28rpx;
+  color: #5F7165;
+  margin-top: 7rpx;
+}
+
+.bigfont .talk-title {
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #1F2D22;
+}
+
+.bigfont .talk-desc {
+  font-size: 29rpx;
+  color: #5F7165;
+  margin-top: 9rpx;
+  line-height: 1.5;
+}

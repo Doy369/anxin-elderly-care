@@ -1,46 +1,31 @@
 const app = getApp()
 const store = require('../../utils/store')
 
+// 资料占位：等「资料编辑」做出来后从云端 users 表读取
+const FALLBACK = {
+  name: '张奶奶',
+  meta: '70岁 · 150****8888'
+}
+
 Page({
   data: {
-    avatarText: '王',
     bigFont: false,
-    mode: 'elder',
-    stats: { total: 0, ongoing: 0, family: 0 }
+    name: FALLBACK.name,
+    meta: FALLBACK.meta,
+    avatarEmoji: '👵'
   },
 
   onShow() {
-    const self = this
-    const mode = app.globalData.mode || store.getMode()
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 4 })
+    }
 
-    Promise.all([store.getOrders(), store.getFamilyMembers()]).then(function (r) {
-      const orders = r[0] || []
-      const members = r[1] || []
-      self.setData({
-        mode: mode,
-        bigFont: app.globalData.bigFont,
-        stats: {
-          total: orders.length,
-          ongoing: orders.filter(function (o) {
-            return ['待接单', '已接单', '服务中', '待评价'].indexOf(o.status) > -1
-          }).length,
-          family: members.length
-        }
-      })
-    }).catch(function () {
-      self.setData({
-        mode: mode,
-        bigFont: app.globalData.bigFont,
-        stats: { total: 0, ongoing: 0, family: 0 }
-      })
+    const user = app.globalData.userInfo || {}
+    this.setData({
+      bigFont: app.globalData.bigFont,
+      name: user.nickname || FALLBACK.name,
+      meta: user.phone ? ('70岁 · ' + user.phone) : FALLBACK.meta
     })
-  },
-
-  switchMode(e) {
-    const mode = e.currentTarget.dataset.mode
-    app.setMode(mode)
-    this.setData({ mode: mode })
-    wx.showToast({ title: mode === 'family' ? '已切换到家人代下单' : '已切换到本人使用', icon: 'none' })
   },
 
   toggleBigFont() {
@@ -48,21 +33,41 @@ Page({
     app.setBigFont(next)
     this.setData({ bigFont: next })
     wx.showToast({
-      title: next ? '已开启超大字体' : '已恢复标准字体',
+      title: next ? '已开启大字体' : '已恢复标准字体',
       icon: 'none'
     })
+  },
+
+  editProfile() {
+    wx.showToast({ title: '资料编辑开发中', icon: 'none' })
   },
 
   goFamily() {
     wx.navigateTo({ url: '/pages/family/family' })
   },
 
-  goOrders() {
-    wx.switchTab({ url: '/pages/orders/orders' })
+  goMyHome() {
+    wx.switchTab({ url: '/pages/myhome/myhome' })
   },
 
-  goServices() {
-    wx.switchTab({ url: '/pages/services/services?cat=install' })
+  goOrders() {
+    wx.navigateTo({ url: '/pages/orders/orders' })
+  },
+
+  goFavorites() {
+    wx.showToast({ title: '收藏功能开发中', icon: 'none' })
+  },
+
+  goStaff() {
+    store.getStaffMe().then(function (r) {
+      if (r && r.staff) {
+        wx.navigateTo({ url: '/pages/staff/home' })
+      } else {
+        wx.navigateTo({ url: '/pages/staff/activate/activate' })
+      }
+    }).catch(function () {
+      wx.navigateTo({ url: '/pages/staff/activate/activate' })
+    })
   },
 
   callService() {
@@ -74,15 +79,6 @@ Page({
       success(res) {
         if (res.confirm) wx.makePhoneCall({ phoneNumber: '4008001234' })
       }
-    })
-  },
-
-  showAbout() {
-    wx.showModal({
-      title: '关于安心养老',
-      content: '平台提供适老化家居安装改造与居家养老服务预约。\n\n服务人员均实名认证，服务过程全程留痕，子女可远程查看服务记录。\n\n客服热线 400-800-1234',
-      showCancel: false,
-      confirmText: '知道了'
     })
   }
 })

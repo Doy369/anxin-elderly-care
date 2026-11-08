@@ -1,5 +1,6 @@
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .page {
   padding-bottom: 60rpx;}
@@ -13,7 +14,7 @@ page {
   flex-direction: column;}
 
 .hero-serving {
-  background: linear-gradient(150deg, #15803D, #22A855);}
+  background: linear-gradient(150deg, #2E7D32, #43A047);}
 
 .hero-canceled {
   background: linear-gradient(150deg, #8C9A93, #B4C0BA);}
@@ -29,7 +30,7 @@ page {
   margin-top: 12rpx;}
 
 .card {
-  border: 2rpx solid #E6EFE9;
+  border: 2rpx solid #EDF3ED;
   background: #FFFFFF;
   border-radius: 24rpx;
   padding: 32rpx;
@@ -38,7 +39,7 @@ page {
 .card-title {
   font-size: 34rpx;
   font-weight: 700;
-  color: #14261F;
+  color: #1F2D22;
   margin-bottom: 26rpx;}
 
 
@@ -61,10 +62,10 @@ page {
   margin-top: 12rpx;}
 
 .tl-dot.done {
-  background: #15803D;}
+  background: #2E7D32;}
 
 .tl-dot.current {
-  background: #15803D; border: 6rpx solid #BFE6CC; width: 38rpx; height: 38rpx; margin-top: 6rpx;}
+  background: #2E7D32; border: 6rpx solid #BFE6CC; width: 38rpx; height: 38rpx; margin-top: 6rpx;}
 
 .tl-line {
   flex: 1;
@@ -79,16 +80,16 @@ page {
 
 .tl-title {
   font-size: 29rpx;
-  color: #9AA8A2;}
+  color: #5F7165;}
 
 .tl-title.active {
-  color: #14261F;
+  color: #1F2D22;
   font-weight: 700;}
 
 .tl-time {
   display: block;
   font-size: 24rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   margin-top: 8rpx;}
 
 
@@ -100,38 +101,38 @@ page {
 
 .info-label {
   font-size: 27rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   width: 170rpx;
   flex-shrink: 0;}
 
 .info-value {
   flex: 1;
   font-size: 29rpx;
-  color: #3D4F49;
+  color: #3D4A3F;
   line-height: 1.6;}
 
 .info-value.amount {
-  color: #0F7A38;
+  color: #C4512E;
   font-weight: 700;}
 
 .info-value.muted {
-  color: #9AA8A2;
+  color: #5F7165;
   font-size: 26rpx;}
 
 
 /* 记录 */
 .rec-empty {
-  background: #F6FAF7;
+  background: #F6FAF5;
   border-radius: 16rpx;
   padding: 26rpx 24rpx;}
 
 .rec-empty-text {
   font-size: 26rpx;
-  color: #7A8B85;
+  color: #5F7165;
   line-height: 1.6;}
 
 .rec-item {
-  border-left: 4rpx solid #15803D;
+  border-left: 4rpx solid #2E7D32;
   padding: 6rpx 0 6rpx 22rpx;
   margin-bottom: 26rpx;}
 
@@ -143,16 +144,16 @@ page {
 
 .rec-time {
   font-size: 24rpx;
-  color: #9AA8A2;}
+  color: #5F7165;}
 
 .rec-who {
   font-size: 24rpx;
-  color: #15803D;
+  color: #2E7D32;
   font-weight: 600;}
 
 .rec-content {
   font-size: 28rpx;
-  color: #3D4F49;
+  color: #3D4A3F;
   line-height: 1.65;}
 
 .rec-demo-btn {
@@ -163,7 +164,7 @@ page {
 
 /* 危险区 */
 .danger-card {
-  border: 2rpx solid #E4EAE6;}
+  border: 2rpx solid #E8F0E9;}
 
 .danger-tip {
   display: block;
@@ -193,17 +194,18 @@ page {
 
 .btn-ghost {
   background: #FFFFFF;
-  color: #15803D;
-  border: 2rpx solid #15803D;}
+  color: #2E7D32;
+  border: 2rpx solid #2E7D32;}
 
 .danger-card .btn-ghost {
-  color: #5F7168;
-  border-color: #5F7168;}
+  color: #6B7B6E;
+  border-color: #6B7B6E;}
 
 
 /* ===== 超大字体（适老化）覆盖样式 ===== */
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .bigfont .page {
   padding-bottom: 68rpx;}
@@ -217,7 +219,7 @@ page {
   flex-direction: column;}
 
 .bigfont .hero-serving {
-  background: linear-gradient(150deg, #15803D, #22A855);}
+  background: linear-gradient(150deg, #2E7D32, #43A047);}
 
 .bigfont .hero-canceled {
   background: linear-gradient(150deg, #8C9A93, #B4C0BA);}
@@ -241,7 +243,7 @@ page {
 .bigfont .card-title {
   font-size: 42rpx;
   font-weight: 700;
-  color: #14261F;
+  color: #1F2D22;
   margin-bottom: 30rpx;}
 
 .bigfont .tl-row {
@@ -262,10 +264,10 @@ page {
   margin-top: 14rpx;}
 
 .bigfont .tl-dot.done {
-  background: #15803D;}
+  background: #2E7D32;}
 
 .bigfont .tl-dot.current {
-  background: #15803D; border: 6rpx solid #BFE6CC; width: 38rpx; height: 38rpx; margin-top: 6rpx;}
+  background: #2E7D32; border: 6rpx solid #BFE6CC; width: 38rpx; height: 38rpx; margin-top: 6rpx;}
 
 .bigfont .tl-line {
   flex: 1;
@@ -280,16 +282,16 @@ page {
 
 .bigfont .tl-title {
   font-size: 36rpx;
-  color: #9AA8A2;}
+  color: #5F7165;}
 
 .bigfont .tl-title.active {
-  color: #14261F;
+  color: #1F2D22;
   font-weight: 700;}
 
 .bigfont .tl-time {
   display: block;
   font-size: 30rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   margin-top: 9rpx;}
 
 .bigfont .info-row {
@@ -299,36 +301,36 @@ page {
 
 .bigfont .info-label {
   font-size: 33rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   width: 170rpx;
   flex-shrink: 0;}
 
 .bigfont .info-value {
   flex: 1;
   font-size: 36rpx;
-  color: #3D4F49;
+  color: #3D4A3F;
   line-height: 1.6;}
 
 .bigfont .info-value.amount {
-  color: #0F7A38;
+  color: #C4512E;
   font-weight: 700;}
 
 .bigfont .info-value.muted {
-  color: #9AA8A2;
+  color: #5F7165;
   font-size: 32rpx;}
 
 .bigfont .rec-empty {
-  background: #F6FAF7;
+  background: #F6FAF5;
   border-radius: 16rpx;
   padding: 26rpx 24rpx;}
 
 .bigfont .rec-empty-text {
   font-size: 32rpx;
-  color: #7A8B85;
+  color: #5F7165;
   line-height: 1.6;}
 
 .bigfont .rec-item {
-  border-left: 4rpx solid #15803D;
+  border-left: 4rpx solid #2E7D32;
   padding: 6rpx 0 6rpx 22rpx;
   margin-bottom: 30rpx;}
 
@@ -340,16 +342,16 @@ page {
 
 .bigfont .rec-time {
   font-size: 30rpx;
-  color: #9AA8A2;}
+  color: #5F7165;}
 
 .bigfont .rec-who {
   font-size: 30rpx;
-  color: #15803D;
+  color: #2E7D32;
   font-weight: 600;}
 
 .bigfont .rec-content {
   font-size: 35rpx;
-  color: #3D4F49;
+  color: #3D4A3F;
   line-height: 1.65;}
 
 .bigfont .rec-demo-btn {
@@ -358,7 +360,7 @@ page {
   font-size: 33rpx;}
 
 .bigfont .danger-card {
-  border: 2rpx solid #E4EAE6;}
+  border: 2rpx solid #E8F0E9;}
 
 .bigfont .danger-tip {
   display: block;
@@ -388,12 +390,12 @@ page {
 
 .bigfont .btn-ghost {
   background: #FFFFFF;
-  color: #15803D;
-  border: 2rpx solid #15803D;}
+  color: #2E7D32;
+  border: 2rpx solid #2E7D32;}
 
 .bigfont .danger-card .btn-ghost {
-  color: #5F7168;
-  border-color: #5F7168;}
+  color: #6B7B6E;
+  border-color: #6B7B6E;}
 
 
 
@@ -405,7 +407,7 @@ page {
 .demo-tip {
   display: block;
   font-size: 25rpx;
-  color: #7A8B85;
+  color: #5F7165;
   line-height: 1.6;
   margin-bottom: 22rpx;
 }
@@ -427,10 +429,38 @@ page {
 
 .bigfont .demo-tip {
   font-size: 31rpx;
-  color: #7A8B85;
+  color: #5F7165;
   line-height: 1.6;
   margin-bottom: 25rpx;}
 
 .bigfont .demo-btn {
   height: 100rpx;
   font-size: 35rpx;}
+
+/* 评价 */
+.rate-card .rate-tip {
+  display: block;
+  font-size: 24rpx;
+  color: #5F7165;
+  margin: 8rpx 0 20rpx;
+}
+
+.stars {
+  display: flex;
+  margin-bottom: 24rpx;
+}
+
+.star {
+  font-size: 64rpx;
+  color: #DCE7DD;
+  margin-right: 18rpx;
+  line-height: 1;
+}
+
+.star.on {
+  color: #F0A020;
+}
+
+.rate-input {
+  margin-bottom: 24rpx;
+}

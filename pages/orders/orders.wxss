@@ -1,5 +1,6 @@
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .page {
   padding-bottom: 60rpx;}
@@ -19,22 +20,22 @@ page {
   margin-right: 20rpx;
   display: flex;
   align-items: center;
-  background: #F4F8F5;}
+  background: #F6FAF5;}
 
 .filter-item.active {
-  background: #15803D;}
+  background: #2E7D32;}
 
 .filter-item text,
 .filter-item {
   font-size: 28rpx;
-  color: #55665E;
+  color: #6B7B6E;
   font-weight: 600;}
 
 .filter-item.active {
   color: #FFFFFF;}
 
 .order-card {
-  border: 2rpx solid #E6EFE9;
+  border: 2rpx solid #EDF3ED;
   padding: 30rpx;}
 
 .oc-head {
@@ -42,7 +43,7 @@ page {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 22rpx;
-  border-bottom: 2rpx solid #E6EFE9;
+  border-bottom: 2rpx solid #EDF3ED;
   margin-bottom: 22rpx;}
 
 .oc-head-left {
@@ -56,7 +57,7 @@ page {
 .oc-name {
   font-size: 32rpx;
   font-weight: 700;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .oc-status {
   font-size: 25rpx;
@@ -64,19 +65,23 @@ page {
   border-radius: 999rpx;}
 
 .status-pending {
-  background: #F1F6F2; color: #0B5F2C;}
+  background: #F6FAF5; color: #2E7D32;}
 
 .status-accepted {
-  background: #E9F6EE; color: #15803D;}
+  background: #EAF6EB; color: #2E7D32;}
 
 .status-serving {
-  background: #D3EFE0; color: #0B5F2C;}
+  background: #DFF1E1; color: #2E7D32;}
+
+/* 待评价：需要用户动手，用实心绿把它从灰色里拎出来 */
+.status-rate {
+  background: #2E7D32; color: #FFFFFF;}
 
 .status-done {
-  background: #E6EFE9; color: #6B7C74;}
+  background: #EDF3ED; color: #6B7C74;}
 
 .status-canceled {
-  background: #F4F6F4; color: #6B7C74;}
+  background: #F7FAF7; color: #6B7C74;}
 
 .oc-row {
   display: flex;
@@ -84,14 +89,14 @@ page {
 
 .oc-label {
   font-size: 27rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   width: 160rpx;
   flex-shrink: 0;}
 
 .oc-value {
   flex: 1;
   font-size: 28rpx;
-  color: #3D4F49;}
+  color: #3D4A3F;}
 
 .oc-foot {
   display: flex;
@@ -99,12 +104,12 @@ page {
   justify-content: space-between;
   margin-top: 24rpx;
   padding-top: 22rpx;
-  border-top: 2rpx solid #E6EFE9;}
+  border-top: 2rpx solid #EDF3ED;}
 
 .oc-amount {
   font-size: 36rpx;
   font-weight: 700;
-  color: #0F7A38;}
+  color: #C4512E;}
 
 .oc-actions {
   display: flex;}
@@ -119,11 +124,11 @@ page {
 
 .btn-ghost {
   background: #FFFFFF;
-  color: #15803D;
-  border: 2rpx solid #15803D;}
+  color: #2E7D32;
+  border: 2rpx solid #2E7D32;}
 
 .btn-primary {
-  background: #15803D;
+  background: #2E7D32;
   color: #FFFFFF;}
 
 .btn-sm::after {
@@ -145,11 +150,11 @@ page {
   font-size: 100rpx;}
 
 .empty-text {
-  display: block; font-size: 30rpx; color: #7A8B85; margin: 24rpx 0 40rpx;}
+  display: block; font-size: 30rpx; color: #5F7165; margin: 24rpx 0 40rpx;}
 
 .empty-btn {
   width: 420rpx;
-  background: #15803D;
+  background: #2E7D32;
   color: #FFFFFF;
   font-size: 32rpx;
   height: 96rpx;}
@@ -157,7 +162,8 @@ page {
 
 /* ===== 超大字体（适老化）覆盖样式 ===== */
 page {
-  background: #FFFFFF;}
+  background: #F4F8F2;
+}
 
 .bigfont .page {
   padding-bottom: 68rpx;}
@@ -177,15 +183,15 @@ page {
   margin-right: 23rpx;
   display: flex;
   align-items: center;
-  background: #F4F8F5;}
+  background: #F6FAF5;}
 
 .bigfont .filter-item.active {
-  background: #15803D;}
+  background: #2E7D32;}
 
 .bigfont .filter-item text,
 .bigfont .filter-item {
   font-size: 35rpx;
-  color: #55665E;
+  color: #6B7B6E;
   font-weight: 600;}
 
 .bigfont .filter-item.active {
@@ -199,7 +205,7 @@ page {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 25rpx;
-  border-bottom: 2rpx solid #E6EFE9;
+  border-bottom: 2rpx solid #EDF3ED;
   margin-bottom: 25rpx;}
 
 .bigfont .oc-head-left {
@@ -213,7 +219,7 @@ page {
 .bigfont .oc-name {
   font-size: 40rpx;
   font-weight: 700;
-  color: #14261F;}
+  color: #1F2D22;}
 
 .bigfont .oc-status {
   font-size: 31rpx;
@@ -221,19 +227,19 @@ page {
   border-radius: 999rpx;}
 
 .bigfont .status-pending {
-  background: #F1F6F2; color: #0B5F2C;}
+  background: #F6FAF5; color: #2E7D32;}
 
 .bigfont .status-accepted {
-  background: #E9F6EE; color: #15803D;}
+  background: #EAF6EB; color: #2E7D32;}
 
 .bigfont .status-serving {
-  background: #D3EFE0; color: #0B5F2C;}
+  background: #DFF1E1; color: #2E7D32;}
 
 .bigfont .status-done {
-  background: #E6EFE9; color: #6B7C74;}
+  background: #EDF3ED; color: #6B7C74;}
 
 .bigfont .status-canceled {
-  background: #F4F6F4; color: #6B7C74;}
+  background: #F7FAF7; color: #6B7C74;}
 
 .bigfont .oc-row {
   display: flex;
@@ -241,14 +247,14 @@ page {
 
 .bigfont .oc-label {
   font-size: 33rpx;
-  color: #9AA8A2;
+  color: #5F7165;
   width: 160rpx;
   flex-shrink: 0;}
 
 .bigfont .oc-value {
   flex: 1;
   font-size: 35rpx;
-  color: #3D4F49;}
+  color: #3D4A3F;}
 
 .bigfont .oc-foot {
   display: flex;
@@ -256,12 +262,12 @@ page {
   justify-content: space-between;
   margin-top: 27rpx;
   padding-top: 25rpx;
-  border-top: 2rpx solid #E6EFE9;}
+  border-top: 2rpx solid #EDF3ED;}
 
 .bigfont .oc-amount {
   font-size: 45rpx;
   font-weight: 700;
-  color: #0F7A38;}
+  color: #C4512E;}
 
 .bigfont .oc-actions {
   display: flex;}
@@ -276,11 +282,11 @@ page {
 
 .bigfont .btn-ghost {
   background: #FFFFFF;
-  color: #15803D;
-  border: 2rpx solid #15803D;}
+  color: #2E7D32;
+  border: 2rpx solid #2E7D32;}
 
 .bigfont .btn-primary {
-  background: #15803D;
+  background: #2E7D32;
   color: #FFFFFF;}
 
 .bigfont .btn-sm::after {
@@ -302,9 +308,9 @@ page {
   font-size: 124rpx;}
 
 .bigfont .empty-text {
-  display: block; font-size: 30rpx; color: #7A8B85; margin: 24rpx 0 40rpx;}
+  display: block; font-size: 30rpx; color: #5F7165; margin: 24rpx 0 40rpx;}
 
 .bigfont .empty-btn {
-  width: 420rpx; background: #15803D; color: #FFFFFF; font-size: 32rpx; height: 96rpx;}
+  width: 420rpx; background: #2E7D32; color: #FFFFFF; font-size: 32rpx; height: 96rpx;}
 
 
