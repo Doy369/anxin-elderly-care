@@ -1,5 +1,11 @@
 # 项目长期记忆
 
+## 仓库
+
+- **私有仓库**：https://github.com/Doy369/anxin-elderly-care （默认分支 `master`，remote `origin`）
+- `gh` CLI 装在 `C:\Program Files\GitHub CLI\gh.exe`，**不在 PATH**，需绝对路径调用；账号 `Doy369`
+- `.gitignore` 排除 `docs/preview-qr.png`（构建产物）
+
 ## 安心养老 · 银发经济微信小程序
 
 原生微信小程序工程，路径即工作区根目录。适老化家居安装 + 居家养老服务预约，双模式（老人自用 / 子女代下单）。
