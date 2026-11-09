@@ -15,3 +15,8 @@ node_modules/
 
 # 构建产物（每次 preview 都会重新生成）
 docs/preview-qr.png
+
+# 数据库导出文件（里面是真实用户数据，不能进仓库）
+exports/
+*.export.json
+db-backup*/
