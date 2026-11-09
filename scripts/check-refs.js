@@ -111,6 +111,37 @@ if (exists('cloudfunctions')) {
   })
 }
 
+/* ---------- 6. 数据层三个实现的方法契约必须一致 ---------- */
+try {
+  const cloudImpl = require(path.join(ROOT, 'utils/cloud-api.js'))
+  const httpImpl = require(path.join(ROOT, 'utils/http-store.js'))
+  const localImpl = require(path.join(ROOT, 'utils/local-store.js'))
+
+  function methods(m) {
+    return Object.keys(m).filter(function (k) {
+      return typeof m[k] === 'function' && k !== 'name'
+    })
+  }
+
+  const base = methods(cloudImpl)
+  const http = methods(httpImpl)
+  const loc = methods(localImpl)
+
+  // cloud 是基准：http 必须一模一样，否则切后端会缺方法
+  http.filter(function (k) { return base.indexOf(k) === -1 })
+    .forEach(function (k) { errors.push('http-store 多出方法：' + k) })
+  base.filter(function (k) { return http.indexOf(k) === -1 })
+    .forEach(function (k) { errors.push('http-store 缺少方法：' + k) })
+
+  // local 允许少一个 login —— store.js 里有兜底实现
+  loc.filter(function (k) { return base.indexOf(k) === -1 && k !== 'login' })
+    .forEach(function (k) { errors.push('local-store 多出方法：' + k) })
+  base.filter(function (k) { return loc.indexOf(k) === -1 && k !== 'login' })
+    .forEach(function (k) { errors.push('local-store 缺少方法：' + k) })
+} catch (e) {
+  errors.push('数据层实现加载失败：' + e.message)
+}
+
 /* ---------- 输出 ---------- */
 console.log('页面 ' + pages.length + ' 个 · JS ' + jsFiles.length + ' 个')
 if (errors.length === 0) {

@@ -1,12 +1,16 @@
 /**
  * 数据层统一出口
  *
- * 页面只 require 这个文件。走云端还是本地，由 config.js 的 cloudEnv 决定，
- * 页面代码不需要区分。
+ * 页面只 require 这个文件。走哪个后端由 config.js 的 backend 决定：
+ *   'cloud' 微信云开发 → cloud-api.js
+ *   'http'  自建后端   → http-store.js
+ *   'local' 本机缓存   → local-store.js
+ *
+ * 三个实现的方法名、入参、Promise 约定完全一致，所以页面代码不需要区分。
  *
  * 接口约定：
  *   - 模式、超大字体：同步返回（设备偏好，不上云）
- *   - 订单、家人档案：返回 Promise
+ *   - 其余：返回 Promise
  *       .then(data => ...)            读取类，直接给数据
  *       .then(({ok, ...}) => ...)     写入类，带 ok 标志
  *       .catch(err => ...)            网络或权限错误，页面需提示
@@ -15,8 +19,10 @@
 const cfg = require('./config')
 const local = require('./local-store')
 const cloud = require('./cloud-api')
+const http = require('./http-store')
 
-const impl = cfg.useCloud ? cloud : local
+const IMPLS = { cloud: cloud, http: http, local: local }
+const impl = IMPLS[cfg.backend] || local
 
 module.exports = {
   backend: impl.name,

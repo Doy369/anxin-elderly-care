@@ -19,9 +19,20 @@ App({
     this.globalData.mode = store.getMode() || 'elder'
     this.globalData.bigFont = store.getBigFont()
 
-    if (cfg.useCloud) {
+    if (cfg.backend === 'cloud') {
       this.initCloud()
+    } else if (cfg.backend === 'http') {
+      this.initRemote()
     }
+  },
+
+  /** 自建后端：不需要 wx.cloud，登录换成 wx.login + 自己的 token */
+  initRemote() {
+    store.login().then((res) => {
+      this.globalData.userInfo = res.user || null
+    }).catch((err) => {
+      this.globalData.initError = err.message || '登录失败，部分功能不可用'
+    })
   },
 
   initCloud() {

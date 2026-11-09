@@ -7,7 +7,7 @@
 ### 关键约定
 
 - **纯 `.js` + `.wxss`，无 npm 依赖**（云函数侧有 wx-server-sdk，由云端安装）。
-- **数据层已抽象，双后端**：`utils/store.js` 是分发器，`config.js` 的 `CLOUD_ENV` 决定走 `cloud-api.js`（微信云开发）还是 `local-store.js`（wx storage）。页面只 require store.js，接口统一为 Promise（模式/大字体例外，同步）。
+- **数据层三后端可切换**：`utils/store.js` 是工厂，`config.js` 的 `backend` 决定走 `cloud-api.js`（云开发）/ `http-store.js`（自建后端）/ `local-store.js`（wx storage）。三者方法名与 Promise 契约完全一致（cloud/http 各 32 个，local 少 `login`，store 有兜底），`check-refs.js` 会校验一致性。页面只 require store.js。
 - **AppID 为 `wx9ef94ff784a8f0b4`**（2026-10-26 更换；旧号 `wx4bfdeaa9cbd67a9b` 已弃用，其云开发从未开通、无数据需迁移）。
 - **云开发环境 ID 已填**：`cloud1-d5gl1cb3tac0ac224`，`useCloud` 自动为 true。当前已切云端，但 5 个集合与 3 个云函数**尚未在云端创建**，需按 `docs/一期实施清单.md` 第 3–5 步补齐后才能正常运行。清空 `CLOUD_ENV` 即退回本地模式。
 - **两个演示开关**：`utils/config.js` 的 `demoMode`、`cloudfunctions/order/index.js` 的 `DEMO_MODE`，上线前必须改 false。
